@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+const items = [
+  { icon: 'clock', t: 'Rund um die Uhr', d: '24/7 erreichbar, auch an Feiertagen' },
+  { icon: 'route', t: 'Überall hin', d: 'Deutschlandweit und ins Ausland' },
+  { icon: 'hospital', t: 'Direktabrechnung', d: 'Mit Ihrer Krankenkasse' },
+  { icon: 'baby', t: 'Kindersitzerhöhungen', d: 'In unseren Fahrzeugen integriert' },
+  { icon: 'plane', t: 'Flughafentransfer', d: 'Auf Wunsch mit Namensschild' },
+  { icon: 'credit-card', t: 'Bequem bezahlen', d: 'Bar, Karte, PayPal, Rechnung' },
+  { icon: 'users', t: 'Bis 8 Plätze', d: 'SUV bis 6, Großraumtaxi bis 8' },
+];
+---
+<section class="trust" aria-label="Was Sie sich auf uns verlassen können">
+  <div class="container">
+    <ul class="trust__list">
+      {items.map((it, i) => (
+        <li class="trust__item" data-reveal style={`--i:${i}`}>
+          <Icon name={it.icon} size={26} class="trust__icon" />
+          <span><strong>{it.t}</strong><span>{it.d}</span></span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust { background: var(--ink); color: #fff; padding-block: 1.5rem; }
+  .trust__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: .9rem; }
+  @media (min-width: 560px) { .trust__list { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .trust__list { grid-template-columns: repeat(4, 1fr); gap: 1.25rem 1.5rem; } }
+  .trust__item { margin: 0; display: flex; gap: .75rem; align-items: flex-start; }
+  :global(.trust__icon) { color: var(--yellow); flex: none; margin-top: .15rem; }
+  .trust__item > span { display: flex; flex-direction: column; line-height: 1.3; }
+  .trust__item strong { font-family: var(--font-heading); font-weight: 600; font-size: 1rem; }
+  .trust__item span span { color: #C9CAD1; font-size: .95rem; }
+</style>

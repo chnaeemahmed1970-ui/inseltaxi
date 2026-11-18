@@ -1,0 +1,46 @@
+---
+import site from '../data/site.config.json';
+import Icon from './Icon.astro';
+import TaxiCar from './TaxiCar.astro';
+import { telHref } from '../lib/seo';
+interface Props { title?: string; text?: string; typ?: string }
+const { title = 'Wohin darf es gehen?', text = 'Rufen Sie an oder schicken Sie uns Ihre Anfrage per WhatsApp. Wir sind rund um die Uhr für Sie da.', typ } = Astro.props;
+const formLink = typ ? `/?typ=${typ}#anfrage` : '/#anfrage';
+---
+<section class="ctab" aria-labelledby="cta-titel">
+  <div class="container ctab__inner">
+    <div class="ctab__text">
+      <p class="eyebrow">24/7 für Sie da</p>
+      <h2 id="cta-titel">{title}</h2>
+      <p class="lead">{text}</p>
+    </div>
+    <div class="ctab__actions">
+      <a class="btn btn--call btn--lg ring-pulse" href={telHref} data-magnetic><Icon name="phone" /> <span>{site.telefon.anzeige}<small>Jetzt anrufen</small></span></a>
+      <a class="btn btn--wa btn--lg" href={formLink} data-magnetic><Icon name="whatsapp" /> <span>WhatsApp-Anfrage<small>In 30 Sekunden ausgefüllt</small></span></a>
+    </div>
+  </div>
+  <div class="ctab__road" aria-hidden="true"><div class="ctab__car"><TaxiCar width={110} /></div></div>
+</section>
+
+<style>
+  .ctab { background: var(--yellow); position: relative; overflow: hidden; padding-block: clamp(3rem, 2rem + 4vw, 5.5rem) 5.5rem; }
+  .ctab__inner { display: grid; gap: 2rem; align-items: center; }
+  @media (min-width: 960px) { .ctab__inner { grid-template-columns: 1.3fr 1fr; } }
+  .ctab .eyebrow { color: var(--ink); }
+  .ctab .eyebrow::before { background: conic-gradient(var(--ink) 25%, transparent 0 50%, var(--ink) 0 75%, transparent 0) 0 0 / 12px 12px; }
+  .ctab h2 { font-size: clamp(2rem, 1.3rem + 3vw, 3.4rem); }
+  .ctab .lead { color: var(--ink); margin: 0; }
+  .ctab__actions { display: grid; gap: .75rem; }
+  .ctab__actions .btn { justify-content: flex-start; padding-inline: 1.5rem; }
+  .ctab__actions .btn--call { --bg: var(--ink); --fg: var(--yellow); }
+  .ctab__actions .btn--call:hover { --bg: #000; }
+  .ctab__actions .btn > span { display: flex; flex-direction: column; text-align: left; }
+  .ctab__road { position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: var(--ink); }
+  .ctab__road::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 3px; transform: translateY(-50%); background: repeating-linear-gradient(to right, var(--yellow) 0 22px, transparent 22px 40px); }
+  .ctab__car { position: absolute; bottom: 14px; left: -120px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ctab__car { animation: drive 14s linear infinite; }
+    @keyframes drive { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 240px)); } }
+  }
+  @media (prefers-reduced-motion: reduce) { .ctab__car { left: 8%; } }
+</style>

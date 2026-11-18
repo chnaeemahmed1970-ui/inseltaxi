@@ -1,0 +1,143 @@
+---
+import Icon from './Icon.astro';
+interface Props { headingLevel?: 'h2' | 'h3'; showPhotos?: boolean }
+const { showPhotos = true } = Astro.props;
+
+// Sitzplan von oben, Fahrzeug fährt nach oben. Fahrer = "d", Fahrgastplätze werden in Reihenfolge gefüllt.
+const layouts = {
+  suv: { name: 'SUV', seats: 6, rows: [['d', 1], [2, 3, 4], [5, 6]], h: 300, desc: 'Komfortabel und wendig. Ideal für Alltag, Flughafen und Fernfahrten mit bis zu 6 Personen.' },
+  grossraum: { name: 'Großraumtaxi', seats: 8, rows: [['d', 1, 2], [3, 4, 5], [6, 7, 8]], h: 330, desc: 'Viel Platz für Gruppen, Familien und Reisegepäck. Bis zu 8 Personen in einem Fahrzeug.' },
+} as const;
+
+function seatRects(rows: readonly (readonly (string | number)[])[], H: number) {
+  const W = 170, seat = 34, gap = 10;
+  const top = 92, rowGap = (H - top - 40 - rows.length * seat) / Math.max(1, rows.length - 1);
+  const out: { x: number; y: number; id: string | number }[] = [];
+  rows.forEach((row, r) => {
+    const n = row.length;
+    const rowW = n === 2 ? W - 60 : n * seat + (n - 1) * gap;
+    const x0 = (W - rowW) / 2;
+    row.forEach((id, i) => {
+      const x = n === 2 ? (i === 0 ? x0 : x0 + rowW - seat) : x0 + i * (seat + gap);
+      out.push({ x, y: top + r * (seat + rowGap), id });
+    });
+  });
+  return out;
+}
+const counts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+---
+<div class="fleet" data-fleet>
+  <fieldset class="fleet__picker">
+    <legend>Wie viele Personen fahren mit?</legend>
+    <div class="fleet__counts">
+      {counts.map((n) => (
+        <button type="button" class="fleet__count" data-count={n} aria-pressed={n === 4 ? 'true' : 'false'}>
+          {n === 9 ? '9+' : n}<span class="sr-only"> {n === 1 ? 'Person' : 'Personen'}</span>
+        </button>
+      ))}
+    </div>
+  </fieldset>
+  <p class="fleet__result" aria-live="polite" data-fleet-result>Für 4 Personen passt unser SUV. Auch das Großraumtaxi ist möglich.</p>
+
+  <div class="fleet__grid">
+    {Object.entries(layouts).map(([id, v]) => {
+      const rects = seatRects(v.rows, v.h);
+      return (
+        <article class="vcard" data-vehicle={id} data-seats={v.seats}>
+          {showPhotos && (
+            <div class="vcard__photo" role="img" aria-label={`Platzhalter: Foto unseres ${v.name} folgt`}>
+              <Icon name="car-front" size={40} />
+              <span>Foto unseres {v.name} folgt</span>
+            </div>
+          )}
+          <div class="vcard__body">
+            <div class="vcard__plan">
+              <svg viewBox={`0 0 170 ${v.h}`} width="136" height={Math.round(v.h * 0.8)} aria-hidden="true" focusable="false">
+                <rect x="6" y="6" width="158" height={v.h - 12} rx="44" class="vc-body" />
+                <path d={`M28 64 Q85 40 142 64 L136 82 Q85 66 34 82 Z`} class="vc-glass" />
+                <rect x="30" y={v.h - 34} width="110" height="10" rx="5" class="vc-glass" />
+                <rect x="68" y="14" width="34" height="10" rx="3" class="vc-sign" />
+                <rect x="72" y="16" width="5" height="3" fill="#17181C" /><rect x="82" y="16" width="5" height="3" fill="#17181C" /><rect x="92" y="16" width="5" height="3" fill="#17181C" />
+                <rect x="77" y="19" width="5" height="3" fill="#17181C" /><rect x="87" y="19" width="5" height="3" fill="#17181C" />
+                {rects.map((s) => (
+                  s.id === 'd'
+                    ? <rect x={s.x} y={s.y} width="34" height="34" rx="9" class="vc-seat vc-seat--driver" />
+                    : <rect x={s.x} y={s.y} width="34" height="34" rx="9" class="vc-seat" data-seat={s.id} />
+                ))}
+              </svg>
+            </div>
+            <div class="vcard__info">
+              <p class="vcard__fit" data-fit hidden><Icon name="check" size={18} /> Passt</p>
+              <h3>{v.name}</h3>
+              <p class="vcard__seats"><strong>bis {v.seats}</strong> Fahrgäste</p>
+              <p>{v.desc}</p>
+              <ul class="vcard__list">
+                <li><Icon name="baby" size={18} /> Kindersitzerhöhungen integriert</li>
+                <li><Icon name="luggage" size={18} /> Gepäck und Rollator kostenlos</li>
+                <li><Icon name="camera" size={18} /> Dashcam, nur nach außen</li>
+              </ul>
+              <p class="vcard__legend"><span class="sw sw--on" aria-hidden="true"></span> belegt <span class="sw" aria-hidden="true"></span> frei <span class="sw sw--driver" aria-hidden="true"></span> Fahrer</p>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+  <p class="fleet__note"><Icon name="info" size={18} /> Viel Gepäck, Kinderwagen oder Rollator? Sagen Sie es uns bei der Anfrage, dann planen wir das passende Fahrzeug ein. Schematische Darstellung.</p>
+</div>
+
+<style>
+  .fleet__picker { border: 0; padding: 0; margin: 0 0 .75rem; min-width: 0; }
+  .fleet__picker legend { font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem; margin-bottom: .85rem; padding: 0; }
+  .fleet__counts { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .fleet__count {
+    width: 52px; height: 52px; border-radius: 14px; border: 1.5px solid var(--line-strong); background: var(--paper);
+    font: 700 1.2rem var(--font-heading); color: var(--ink); cursor: pointer; transition: background-color .15s, border-color .15s, transform .15s;
+  }
+  .fleet__count:hover { border-color: var(--ink); background: var(--yellow-50); }
+  .fleet__count:active { transform: scale(.94); }
+  .fleet__count[aria-pressed="true"] { background: var(--ink); color: var(--yellow); border-color: var(--ink); }
+  .fleet__result { font-size: 1.15rem; font-weight: 600; min-height: 1.8em; margin: .5rem 0 1.5rem; }
+
+  .fleet__grid { display: grid; gap: 1.25rem; }
+  @media (min-width: 900px) { .fleet__grid { grid-template-columns: 1fr 1fr; } }
+  .vcard {
+    border: 2px solid var(--line); border-radius: var(--radius-lg); background: var(--paper); overflow: hidden;
+    transition: border-color .3s var(--ease-out), box-shadow .3s var(--ease-out), opacity .3s, transform .3s var(--ease-out);
+  }
+  .vcard.is-match { border-color: var(--ink); box-shadow: var(--shadow-lg); }
+  .vcard.is-dim { opacity: .62; }
+  .vcard__photo {
+    aspect-ratio: 16 / 7; display: grid; place-content: center; justify-items: center; gap: .5rem; color: var(--ink-2);
+    background:
+      linear-gradient(135deg, rgba(253,190,4,.22), rgba(253,190,4,.05)),
+      conic-gradient(rgba(23,24,28,.05) 25%, transparent 0 50%, rgba(23,24,28,.05) 0 75%, transparent 0) 0 0 / 28px 28px,
+      var(--yellow-50);
+    font-weight: 700; border-bottom: 1px solid var(--line);
+  }
+  .vcard__body { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; padding: 1.25rem; align-items: start; }
+  @media (max-width: 420px) { .vcard__body { grid-template-columns: 1fr; justify-items: center; } .vcard__info { justify-self: stretch; } }
+  .vcard__plan svg { width: 136px; height: auto; }
+  .vc-body { fill: #F3F1EA; stroke: var(--ink); stroke-width: 3; }
+  .vc-glass { fill: #CFE2EA; }
+  .vc-sign { fill: var(--yellow); stroke: var(--ink); stroke-width: 1.5; }
+  .vc-seat { fill: #fff; stroke: #9A9DA6; stroke-width: 2; transition: fill .25s var(--ease-out), stroke .25s; }
+  .vc-seat.is-on { fill: var(--yellow); stroke: var(--ink); }
+  .vc-seat--driver { fill: var(--ink); stroke: var(--ink); }
+  .vc-wheel { fill: none; stroke: #9A9DA6; stroke-width: 3; }
+  .vcard__info h3 { margin-bottom: .1rem; font-size: 1.5rem; }
+  .vcard__seats { font-size: 1.1rem; margin-bottom: .6rem; }
+  .vcard__seats strong { font-family: var(--font-heading); font-size: 1.6rem; }
+  .vcard__info > p { color: var(--ink-2); font-size: 1.02rem; }
+  .vcard__fit { display: inline-flex; align-items: center; gap: .3rem; background: var(--yellow); color: var(--ink) !important; font-weight: 700; border-radius: 999px; padding: .2rem .7rem; font-size: .9rem !important; margin-bottom: .5rem; }
+  .vcard__fit[hidden] { display: none; }
+  .vcard__list { list-style: none; padding: 0; margin: 0 0 .75rem; font-size: 1rem; }
+  .vcard__list li { display: flex; gap: .5rem; align-items: center; margin: .3rem 0; }
+  .vcard__legend { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; font-size: .9rem !important; color: var(--ink-3) !important; margin: 0; }
+  .sw { width: 14px; height: 14px; border-radius: 4px; border: 2px solid #9A9DA6; background: #fff; display: inline-block; margin-left: .4rem; }
+  .sw:first-child { margin-left: 0; }
+  .sw--on { background: var(--yellow); border-color: var(--ink); }
+  .sw--driver { background: var(--ink); border-color: var(--ink); }
+  .fleet__note { display: flex; gap: .5rem; align-items: flex-start; margin-top: 1.25rem; color: var(--ink-2); font-size: 1rem; }
+  .fleet__note .icon { margin-top: .25rem; flex: none; }
+</style>

@@ -1,0 +1,205 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import RequestForm from '../components/RequestForm.astro';
+import TrustBar from '../components/TrustBar.astro';
+import RouteMap from '../components/RouteMap.astro';
+import FleetPicker from '../components/FleetPicker.astro';
+import Steps from '../components/Steps.astro';
+import Reviews from '../components/Reviews.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import site from '../data/site.config.json';
+import data from '../data/leistungen.json';
+import faq from '../data/faq.json';
+import { telHref, faqJsonLd } from '../lib/seo';
+
+const quick = ['flughafentransfer', 'krankenfahrten', 'geschaeftsfahrten', 'kinder-und-kurierfahrten', 'fernfahrten', 'taxi-alltagsfahrten']
+  .map((s) => data.leistungen.find((l) => l.slug === s)!);
+const startFaq = faq.fragen.filter((f) => f.start);
+---
+<Base
+  title="Taxi Ratzeburg – Flughafentransfer, Krankenfahrten & Fernfahrten | Insel Taxi"
+  description="Insel Taxi aus Ratzeburg: rund um die Uhr erreichbar. Flughafentransfer, Krankenfahrten mit Direktabrechnung, Geschäftsfahrten und Fernfahrten deutschlandweit und ins Ausland. Jetzt anrufen oder per WhatsApp anfragen."
+  jsonld={[faqJsonLd(startFaq)]}
+>
+  <section class="hero" data-hero>
+    <div class="hero__bg" aria-hidden="true" data-parallax="0.18">
+      <svg viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <path id="hero-road" d="M-40 640 C 160 600 220 470 360 460 C 520 450 520 330 640 300 C 760 270 780 140 860 80" fill="none" stroke="#FDBE04" stroke-width="90" stroke-linecap="round" opacity=".18" />
+        <path d="M-40 640 C 160 600 220 470 360 460 C 520 450 520 330 640 300 C 760 270 780 140 860 80" fill="none" stroke="#FDBE04" stroke-width="3" stroke-dasharray="18 18" opacity=".7" />
+        <path class="hero__light" d="M-40 640 C 160 600 220 470 360 460 C 520 450 520 330 640 300 C 760 270 780 140 860 80" pathLength="1000" />
+        <path class="hero__light hero__light--2" d="M-40 640 C 160 600 220 470 360 460 C 520 450 520 330 640 300 C 760 270 780 140 860 80" pathLength="1000" />
+      </svg>
+    </div>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow">Taxi Ratzeburg · rund um die Uhr</p>
+        <h1>Pünktlich. Sauber. <span class="mark">Überall hin.</span></h1>
+        <p class="lead">Insel Taxi aus der Inselstadt Ratzeburg bringt Sie dorthin, wo Sie hinwollen: zum Flughafen, zur Behandlung, zum Kunden oder quer durch Deutschland und darüber hinaus.</p>
+        <div class="hero__actions">
+          <a class="btn btn--call btn--lg ring-pulse" href={telHref} data-magnetic>
+            <Icon name="phone" size={24} /> <span>{site.telefon.anzeige}<small>Jetzt anrufen, 24/7</small></span>
+          </a>
+          <a class="btn btn--wa btn--lg" href="#anfrage" data-magnetic>
+            <Icon name="whatsapp" size={24} /> <span>WhatsApp-Anfrage<small>Formular ausfüllen</small></span>
+          </a>
+        </div>
+        <ul class="hero__points">
+          <li><Icon name="check" size={20} /> Direktabrechnung mit Krankenkassen</li>
+          <li><Icon name="check" size={20} /> SUV bis 6, Großraumtaxi bis 8 Plätze</li>
+          <li><Icon name="check" size={20} /> Bar, Karte, PayPal oder Rechnung</li>
+        </ul>
+      </div>
+      <div class="hero__form">
+        <RequestForm id="anfrage" title="Fahrt anfragen" />
+      </div>
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <section class="section" aria-labelledby="schnellwahl-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Schnellwahl</p>
+        <h2 id="schnellwahl-titel">Was brauchen Sie?</h2>
+        <p>Wählen Sie Ihre Fahrt. Auf der nächsten Seite ist Ihre Anfrage schon passend vorbereitet.</p>
+      </div>
+      <ul class="quick">
+        {quick.map((l, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a class="quick__tile" href={`/leistungen/${l.slug}/?typ=${l.typ}#anfrage`}>
+              <span class="icon-tile"><Icon name={l.icon} size={28} /></span>
+              <span class="quick__label">{l.kachel}</span>
+              <Icon name="arrow-right" size={22} class="quick__arrow" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--mist" aria-labelledby="karte-titel">
+    <div class="container map-grid">
+      <div class="section-head map-grid__text">
+        <p class="eyebrow">Unser Fahrgebiet</p>
+        <h2 id="karte-titel">Ratzeburg ist unser Zuhause, nicht unsere Grenze.</h2>
+        <p>Ob Hamburg Airport um vier Uhr morgens, die Ostsee am Wochenende oder ein Termin in Berlin: Wir fahren Sie Tür zu Tür, deutschlandweit und ins Ausland.</p>
+        <p class="muted">Tippen Sie ein Ziel auf der Karte an. Wir übernehmen es direkt in Ihre Anfrage.</p>
+        <a class="link-arrow" href="/leistungen/fernfahrten/">Mehr zu Fernfahrten <Icon name="arrow-right" size={20} /></a>
+      </div>
+      <RouteMap />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="flotte-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Unsere Flotte</p>
+        <h2 id="flotte-titel">Das passende Fahrzeug für jede Gruppe</h2>
+        <p>Wählen Sie, wie viele Personen mitfahren. Wir zeigen Ihnen, welches Fahrzeug passt.</p>
+      </div>
+      <FleetPicker />
+    </div>
+  </section>
+
+  <section class="section section--sand" aria-labelledby="leistungen-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Leistungen</p>
+        <h2 id="leistungen-titel">Für jeden Anlass die richtige Fahrt</h2>
+      </div>
+      <ul class="grid grid--4 services">
+        {data.leistungen.map((l, i) => (
+          <li class="card card--link service" data-reveal style={`--i:${i % 4}`}>
+            <span class="icon-tile"><Icon name={l.icon} size={26} /></span>
+            <h3><a href={`/leistungen/${l.slug}/`}>{l.titel}</a></h3>
+            <p>{l.kurz}</p>
+            <span class="service__more" aria-hidden="true">Mehr erfahren <Icon name="arrow-right" size={18} /></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ablauf-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">So einfach geht’s</p>
+        <h2 id="ablauf-titel">In drei Schritten zu Ihrer Fahrt</h2>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <Reviews />
+
+  <section class="section section--mist" aria-labelledby="faq-titel">
+    <div class="container faq-grid">
+      <div class="section-head">
+        <p class="eyebrow">Häufige Fragen</p>
+        <h2 id="faq-titel">Gut zu wissen</h2>
+        <p>Die wichtigsten Antworten auf einen Blick. Noch etwas offen? Rufen Sie uns einfach an.</p>
+        <a class="link-arrow" href="/faq/">Alle Fragen und Antworten <Icon name="arrow-right" size={20} /></a>
+      </div>
+      <FaqList items={startFaq} idPrefix="start-faq" />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hero { position: relative; overflow: hidden; background: linear-gradient(180deg, var(--yellow-50) 0%, var(--paper) 85%); padding-block: clamp(2rem, 1rem + 4vw, 4.5rem) clamp(3rem, 2rem + 4vw, 5rem); }
+  .hero__bg { position: absolute; inset: -10% -5% -10% 0; z-index: 0; pointer-events: none; }
+  .hero__bg svg { width: 100%; height: 100%; }
+  .hero__light { fill: none; stroke: #FDBE04; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 0 1000; filter: drop-shadow(0 0 6px rgba(253,190,4,.9)); }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__light { stroke-dasharray: 14 986; animation: light 10s linear infinite; }
+    .hero__light--2 { animation-delay: -5s; }
+    @keyframes light { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+  }
+  .hero__grid { position: relative; z-index: 1; display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 1024px) { .hero__grid { grid-template-columns: 1.05fr 1fr; gap: 3.5rem; } .hero__copy { padding-top: 2.5rem; } }
+  .hero h1 { margin-bottom: 1.25rem; }
+  .hero .lead { max-width: 34em; margin-bottom: 1.75rem; }
+  .hero__actions { display: grid; gap: .75rem; }
+  @media (min-width: 560px) { .hero__actions { grid-template-columns: auto auto; justify-content: start; } }
+  .hero__actions .btn > span { display: flex; flex-direction: column; text-align: left; }
+  .hero__points { list-style: none; padding: 0; margin: 1.75rem 0 0; display: grid; gap: .5rem; }
+  .hero__points li { display: flex; align-items: center; gap: .6rem; margin: 0; font-weight: 600; }
+  .hero__points :global(.icon) { color: var(--ink); background: var(--yellow); border-radius: 50%; padding: 3px; flex: none; }
+
+  .quick { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  @media (min-width: 768px) { .quick { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
+  @media (min-width: 1200px) { .quick { grid-template-columns: repeat(6, 1fr); } }
+  .quick li { margin: 0; }
+  .quick__tile {
+    display: flex; flex-direction: column; gap: .9rem; height: 100%; padding: 1.25rem; min-height: 150px;
+    border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--paper); text-decoration: none; position: relative;
+    transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), border-color .2s, background-color .2s;
+  }
+  .quick__tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--ink); }
+  .quick__tile:hover .icon-tile { background: var(--ink); color: var(--yellow); }
+  .quick__tile .icon-tile { transition: background-color .2s, color .2s; }
+  .quick__label { font-family: var(--font-heading); font-weight: 700; font-size: 1.15rem; line-height: 1.2; margin-top: auto; }
+  :global(.quick__arrow) { position: absolute; right: 1rem; top: 1.25rem; color: var(--ink-3); transition: transform .25s var(--ease-out); }
+  .quick__tile:hover :global(.quick__arrow) { transform: translateX(4px); color: var(--ink); }
+
+  .map-grid { display: grid; gap: 2rem; align-items: center; }
+  @media (min-width: 1024px) { .map-grid { grid-template-columns: .8fr 1.2fr; gap: 3rem; } }
+  .map-grid__text { margin-bottom: 0; }
+
+  .services { list-style: none; padding: 0; margin: 0; }
+  .service { margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+  .service h3 { margin: .75rem 0 0; }
+  .service h3 a { text-decoration: none; }
+  .service p { color: var(--ink-2); font-size: 1.02rem; margin: 0; flex: 1; }
+  .service__more { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; margin-top: .5rem; }
+  .card--link:hover .service__more :global(.icon) { transform: translateX(4px); }
+  .service__more :global(.icon) { transition: transform .25s var(--ease-out); }
+
+  .faq-grid { display: grid; gap: 1.5rem; }
+  @media (min-width: 1024px) { .faq-grid { grid-template-columns: .8fr 1.2fr; gap: 4rem; } }
+</style>

@@ -1,0 +1,211 @@
+---
+import site from '../data/site.config.json';
+import data from '../data/leistungen.json';
+import ziele from '../data/ziele.json';
+import Icon from './Icon.astro';
+
+interface Props {
+  id?: string;
+  typ?: string;
+  mode?: 'wa' | 'mail';
+  title?: string;
+  chips?: string[]; // Ziel-IDs aus ziele.json
+  compact?: boolean;
+}
+const { id = 'anfrage', typ = 'alltag', mode = 'wa', title = 'Fahrt anfragen', chips, compact = false } = Astro.props;
+const f = (n: string) => `${id}-${n}`;
+const chipList = (chips ? chips.map((c) => ziele.ziele.find((z) => z.id === c)) : ziele.ziele.filter((z) => z.chip)).filter(Boolean) as typeof ziele.ziele;
+const typInfo = data.fahrttypen.find((t) => t.id === typ) ?? data.fahrttypen[0];
+---
+<form
+  class:list={['rq', { 'rq--compact': compact }]}
+  id={id}
+  data-request-form
+  data-mode={mode}
+  data-wa={site.whatsapp.nummer}
+  data-mail={site.email}
+  novalidate
+  aria-labelledby={f('title')}
+>
+  <div class="rq__head">
+    <h2 class="rq__title" id={f('title')}>{title}</h2>
+    <p class="rq__sub">{mode === 'wa' ? 'In 30 Sekunden ausgefüllt. Wir antworten schnell, rund um die Uhr.' : 'Ihr E-Mail-Programm öffnet sich mit der fertigen Anfrage.'}</p>
+  </div>
+
+  <div class="rq__summary" role="alert" tabindex="-1" hidden data-summary>
+    <p class="rq__summary-title"><Icon name="info" size={20} /> Bitte prüfen Sie noch:</p>
+    <ul data-summary-list></ul>
+  </div>
+
+  <div class="rq__grid">
+    <div class="field rq__span2">
+      <label for={f('typ')}>Fahrttyp</label>
+      <select class="input" id={f('typ')} name="typ" data-field="typ">
+        {data.fahrttypen.map((t) => <option value={t.id} selected={t.id === typInfo.id} data-hint={t.hint}>{t.label}</option>)}
+      </select>
+    </div>
+
+    <div class="field rq__span2">
+      <label for={f('name')}>Ihr Name</label>
+      <input class="input" id={f('name')} name="name" type="text" autocomplete="name" autocapitalize="words" required data-field="name" aria-describedby={f('name-err')} />
+      <p class="field-error" id={f('name-err')} hidden><Icon name="info" size={18} /><span></span></p>
+    </div>
+
+    <div class="field rq__span2 rq__route">
+      <div class="field">
+        <label for={f('start')}>Start <span class="label-note">(Abholort)</span></label>
+        <input class="input" id={f('start')} name="start" type="text" autocomplete="street-address" placeholder="Adresse oder Ort" required data-field="start" aria-describedby={f('start-err')} />
+        <p class="field-error" id={f('start-err')} hidden><Icon name="info" size={18} /><span></span></p>
+      </div>
+      <button type="button" class="rq__swap" data-swap aria-label="Start und Ziel tauschen" title="Start und Ziel tauschen">
+        <Icon name="arrow-up-down" size={20} />
+      </button>
+      <div class="field">
+        <label for={f('ziel')}>Ziel</label>
+        <input class="input" id={f('ziel')} name="ziel" type="text" autocomplete="off" placeholder="Adresse, Ort oder Flughafen" required data-field="ziel" aria-describedby={`${f('ziel-err')} ${f('ziel-tipp')}`} />
+        <p class="field-error" id={f('ziel-err')} hidden><Icon name="info" size={18} /><span></span></p>
+      </div>
+    </div>
+
+    <div class="rq__span2">
+      <p class="rq__chips-label" id={f('ziel-tipp')}>Beliebte Ziele, ein Tipp genügt:</p>
+      <ul class="chips" aria-labelledby={f('ziel-tipp')}>
+        {chipList.map((z) => (
+          <li><button type="button" class="chip" data-ziel-chip={z.feld} aria-pressed="false">
+            {z.art === 'flughafen' ? <Icon name="plane" size={16} /> : z.art === 'kueste' ? <Icon name="waves" size={16} /> : <Icon name="map-pin" size={16} />}
+            {z.kurz ? `${z.name.replace('Flughafen ', '')} ${z.kurz}` : z.name}
+          </button></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="field rq__span2">
+      <div class="switch">
+        <input type="checkbox" role="switch" id={f('asap')} name="asap" data-field="asap" />
+        <label for={f('asap')}><span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span> Jetzt / so schnell wie möglich</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for={f('datum')}>Datum</label>
+      <input class="input" id={f('datum')} name="datum" type="date" required data-field="datum" aria-describedby={f('datum-err')} />
+      <p class="field-error" id={f('datum-err')} hidden><Icon name="info" size={18} /><span></span></p>
+    </div>
+    <div class="field">
+      <label for={f('zeit')}>Uhrzeit</label>
+      <input class="input" id={f('zeit')} name="zeit" type="time" required step="300" data-field="zeit" aria-describedby={f('zeit-err')} />
+      <p class="field-error" id={f('zeit-err')} hidden><Icon name="info" size={18} /><span></span></p>
+    </div>
+
+    <div class="field rq__span2">
+      <label for={f('personen')}>Personen</label>
+      <div class="stepper">
+        <button type="button" class="stepper__btn" data-step="-1" aria-label="Eine Person weniger" aria-controls={f('personen')}><Icon name="minus" size={22} /></button>
+        <input class="input stepper__input" id={f('personen')} name="personen" type="number" inputmode="numeric" min="1" max="40" value="1" data-field="personen" aria-describedby={f('personen-hint')} />
+        <button type="button" class="stepper__btn" data-step="1" aria-label="Eine Person mehr" aria-controls={f('personen')}><Icon name="plus" size={22} /></button>
+      </div>
+      <p class="rq__people-hint" id={f('personen-hint')} aria-live="polite" data-people-hint></p>
+    </div>
+
+    <div class="field rq__span2">
+      <label for={f('anmerkung')}>Anmerkung <span class="label-note">(optional)</span></label>
+      <textarea class="input" id={f('anmerkung')} name="anmerkung" rows="3" placeholder={typInfo.hint} data-field="anmerkung"></textarea>
+    </div>
+  </div>
+
+  <details class="rq__preview" data-preview-wrap>
+    <summary>Vorschau Ihrer Nachricht</summary>
+    <pre data-preview></pre>
+  </details>
+
+  {mode === 'wa' ? (
+    <>
+      <button type="submit" class="btn btn--wa btn--lg btn--block rq__submit" data-magnetic>
+        <Icon name="whatsapp" size={24} /> Per WhatsApp anfragen
+      </button>
+      <p class="rq__privacy">Es öffnet sich WhatsApp mit Ihrer vorbereiteten Nachricht. Erst wenn Sie dort auf Senden tippen, werden Ihre Angaben übertragen. <a href="/datenschutz/#whatsapp">Datenschutz</a></p>
+      <p class="rq__alt"><button type="button" class="rq__mail-link" data-send-mail>Lieber per E-Mail anfragen?</button></p>
+    </>
+  ) : (
+    <>
+      <button type="submit" class="btn btn--lg btn--block rq__submit" data-magnetic>
+        <Icon name="mail" size={22} /> E-Mail-Anfrage vorbereiten
+      </button>
+      <p class="rq__privacy">Ihr E-Mail-Programm öffnet sich mit der fertigen Nachricht an {site.email}. Erst wenn Sie dort senden, werden Ihre Angaben übertragen. Auf dieser Webseite wird nichts gespeichert. <a href="/datenschutz/#kontakt">Datenschutz</a></p>
+      <p class="rq__alt"><button type="button" class="rq__mail-link" data-send-wa>Lieber per WhatsApp?</button></p>
+    </>
+  )}
+</form>
+
+<style>
+  .rq {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, .9rem + 1.6vw, 2rem); box-shadow: var(--shadow-lg); position: relative;
+  }
+  .rq::before { /* Schachbrett-Kante oben, Motiv aus dem Dachlicht */
+    content: ''; position: absolute; left: 24px; right: 24px; top: -1px; height: 6px; border-radius: 0 0 4px 4px;
+    background: conic-gradient(var(--ink) 25%, var(--yellow) 0 50%, var(--ink) 0 75%, var(--yellow) 0) 0 0 / 12px 12px;
+  }
+  .rq__title { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.75rem); margin-bottom: .25rem; }
+  .rq__sub { color: var(--ink-3); font-size: 1rem; margin-bottom: 1.25rem; }
+  .rq__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem .9rem; }
+  .rq__span2 { grid-column: 1 / -1; }
+  .label-note { font-weight: 400; color: var(--ink-3); }
+  .rq__route { display: grid; grid-template-columns: 1fr; gap: .5rem; position: relative; }
+  .rq__swap {
+    justify-self: end; width: 44px; height: 44px; margin-block: -.25rem; display: grid; place-items: center;
+    border-radius: 50%; border: 1.5px solid var(--line-strong); background: var(--paper); cursor: pointer; color: var(--ink);
+    transition: transform .3s var(--ease-out), background-color .15s;
+  }
+  .rq__swap:hover { background: var(--yellow-50); border-color: var(--ink); }
+  .rq__swap.is-swapped { transform: rotate(180deg); }
+  @media (min-width: 640px) {
+    .rq:not(.rq--compact) .rq__route { grid-template-columns: 1fr auto 1fr; align-items: start; gap: .6rem; }
+    .rq:not(.rq--compact) .rq__swap { margin-top: 2.15rem; transform: rotate(90deg); }
+    .rq:not(.rq--compact) .rq__swap.is-swapped { transform: rotate(270deg); }
+  }
+  .rq__chips-label { font-size: .95rem; color: var(--ink-3); margin: -.25rem 0 .5rem; }
+  .rq .chips { gap: .4rem; }
+  .rq .chip { min-height: 44px; font-size: .95rem; padding: .35rem .8rem; }
+
+  .switch { display: flex; align-items: center; }
+  .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .switch label { display: inline-flex; align-items: center; gap: .75rem; min-height: 48px; cursor: pointer; margin: 0; font-weight: 700; }
+  .switch__track { width: 52px; height: 30px; border-radius: 999px; background: var(--line-strong); position: relative; transition: background-color .2s; flex: none; }
+  .switch__thumb { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .25s var(--ease-out); }
+  .switch input:checked + label .switch__track { background: var(--ink); }
+  .switch input:checked + label .switch__thumb { transform: translateX(22px); background: var(--yellow); }
+  .switch input:focus-visible + label .switch__track { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: 0 0 0 6px var(--yellow); }
+
+  .stepper { display: grid; grid-template-columns: 56px 1fr 56px; gap: .5rem; max-width: 280px; }
+  .stepper__btn {
+    height: 52px; border-radius: var(--radius-sm); border: 1.5px solid var(--line-strong); background: var(--paper);
+    display: grid; place-items: center; cursor: pointer; color: var(--ink); transition: background-color .15s, transform .1s;
+  }
+  .stepper__btn:hover { background: var(--yellow-50); border-color: var(--ink); }
+  .stepper__btn:active { transform: scale(.94); }
+  .stepper__btn:disabled { opacity: .4; cursor: not-allowed; }
+  .stepper__input { text-align: center; font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem; -moz-appearance: textfield; }
+  .stepper__input::-webkit-outer-spin-button, .stepper__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .rq__people-hint { margin: .5rem 0 0; font-size: 1rem; color: var(--ink-2); min-height: 1.6em; display: flex; gap: .5rem; align-items: flex-start; }
+  .rq__people-hint:empty { display: none; }
+  .rq__people-hint strong { color: var(--ink); }
+
+  .rq__summary { border: 2px solid var(--error); background: #FFF6F5; border-radius: var(--radius-sm); padding: .9rem 1.1rem; margin-bottom: 1.25rem; }
+  .rq__summary-title { display: flex; align-items: center; gap: .5rem; font-weight: 700; color: var(--error); margin: 0 0 .4rem; }
+  .rq__summary ul { margin: 0; }
+  .rq__summary a { color: var(--error); font-weight: 600; }
+
+  .rq__preview { margin: 1.25rem 0 0; border: 1px dashed var(--line-strong); border-radius: var(--radius-sm); background: var(--mist); }
+  .rq__preview summary { cursor: pointer; padding: .75rem 1rem; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+  .rq__preview pre { margin: 0; padding: 0 1rem 1rem; font: 400 1rem/1.5 var(--font-body); white-space: pre-wrap; word-break: break-word; }
+
+  .rq__submit { margin-top: 1.25rem; }
+  .rq__privacy { font-size: .95rem; color: var(--ink-3); margin: .85rem 0 0; }
+  .rq__alt { margin: .5rem 0 0; text-align: center; }
+  .rq__mail-link {
+    background: none; border: 0; padding: .5rem .75rem; min-height: 44px; cursor: pointer;
+    font: 600 1rem var(--font-body); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--yellow-600); text-underline-offset: 3px;
+  }
+  .rq__mail-link:hover { color: var(--ink); }
+</style>

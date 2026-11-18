@@ -1,0 +1,185 @@
+---
+// Schematische Karte Norddeutschland. Grobe Küstenlinie, keine exakte Kartografie.
+import data from '../data/ziele.json';
+import Icon from './Icon.astro';
+
+const LON0 = 7.6, LON1 = 14.4, LAT0 = 52.15, LAT1 = 55.15;
+const W = 600;
+const kx = W / (LON1 - LON0);
+const ky = kx / Math.cos((53.65 * Math.PI) / 180);
+const H = Math.round((LAT1 - LAT0) * ky);
+const P = (lng: number, lat: number) => [ (lng - LON0) * kx, (LAT1 - lat) * ky ] as const;
+const pts = (arr: number[][]) => arr.map(([lng, lat]) => P(lng, lat).map((v) => v.toFixed(1)).join(',')).join(' ');
+
+// Nordsee: Küste von West nach Nord, dann Kartenecke
+const northSea = pts([
+  [7.0, 53.3], [7.25, 53.33], [7.6, 53.62], [8.0, 53.7], [8.12, 53.5], [8.3, 53.42], [8.52, 53.57],
+  [8.7, 53.88], [9.05, 53.88], [8.85, 54.12], [8.6, 54.3], [9.0, 54.48], [8.62, 54.9],
+  [8.66, 55.05], [8.6, 55.25], [8.4, 55.5], [7.0, 55.5],
+]);
+const baltic = pts([
+  [9.43, 54.82], [9.7, 54.85], [9.9, 54.95], [9.75, 55.2], [9.9, 55.5], [14.6, 55.5], [14.6, 53.95],
+  [14.2, 53.92], [13.9, 54.05], [13.7, 54.15], [13.45, 54.12], [13.1, 54.3], [13.65, 54.48],
+  [13.4, 54.68], [13.15, 54.55], [12.85, 54.45], [12.45, 54.47], [12.35, 54.32], [12.1, 54.18],
+  [11.75, 54.15], [11.45, 53.95], [11.1, 53.98], [10.88, 53.96], [10.78, 54.08], [11.0, 54.2],
+  [11.0, 54.38], [11.25, 54.42], [11.05, 54.52], [10.85, 54.42], [10.6, 54.32], [10.3, 54.43],
+  [10.15, 54.36], [10.17, 54.47], [9.85, 54.47], [10.02, 54.68], [9.6, 54.82],
+]);
+const lolland = pts([[11.05, 54.85], [11.5, 54.65], [11.95, 54.57], [12.2, 54.8], [11.7, 54.95], [11.15, 54.95]]);
+const zealand = pts([[11.15, 55.5], [11.2, 55.25], [11.7, 55.15], [12.2, 55.2], [12.45, 55.35], [12.6, 55.5]]);
+const fehmarn = pts([[11.0, 54.43], [11.25, 54.42], [11.3, 54.5], [11.05, 54.53]]);
+const lake = P(10.77, 53.7);
+
+const [sx, sy] = P(data.start.lng, data.start.lat);
+const routes = data.ziele.map((z, i) => {
+  const [x, y] = P(z.lng, z.lat);
+  const dx = x - sx, dy = y - sy;
+  const len = Math.hypot(dx, dy);
+  const bend = (i % 2 ? 1 : -1) * Math.min(40, len * 0.18);
+  const cx = sx + dx / 2 - (dy / len) * bend;
+  const cy = sy + dy / 2 + (dx / len) * bend;
+  return { ...z, x, y, d: `M${sx.toFixed(1)} ${sy.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}` };
+});
+const abroad = [
+  ...data.ausland,
+  { name: 'Ganz Deutschland', x: 0.6, y: 0.985, dir: 's' },
+].map((a) => {
+  const x = a.x * W, y = a.y * H;
+  return { ...a, px: x, py: y, d: `M${sx.toFixed(1)} ${sy.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}` };
+});
+const pct = (v: number, t: number) => `${((v / t) * 100).toFixed(2)}%`;
+---
+<div class="rmap" data-routemap data-gsap>
+  <div class="rmap__canvas" style={`aspect-ratio: ${W} / ${H}`}>
+    <svg viewBox={`0 0 ${W} ${H}`} class="rmap__svg" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="rmap-dots" width="14" height="14" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.1" fill="#D9D5CA" />
+        </pattern>
+        <marker id="rmap-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#5F636E" />
+        </marker>
+      </defs>
+      <rect width={W} height={H} fill="url(#rmap-dots)" />
+      <g class="rmap__sea">
+        <polygon points={northSea} />
+        <polygon points={baltic} />
+      </g>
+      <g class="rmap__land">
+        <polygon points={lolland} /><polygon points={zealand} /><polygon points={fehmarn} />
+      </g>
+      <text x={P(7.7, 54.05)[0]} y={P(7.7, 54.05)[1]} class="rmap__sea-label">Nordsee</text>
+      <text x={P(12.0, 54.82)[0] + 30} y={P(12.0, 54.82)[1] + 34} class="rmap__sea-label">Ostsee</text>
+
+      <g class="rmap__abroad">
+        {abroad.map((a) => <path d={a.d} pathLength="1" marker-end="url(#rmap-arrow)" data-route-abroad />)}
+      </g>
+      <g class="rmap__routes">
+        {routes.map((r) => <path d={r.d} pathLength="1" data-route={r.id} class={`rmap__route rmap__route--${r.art}`} />)}
+      </g>
+      <ellipse cx={lake[0] + 1} cy={lake[1] - 4} rx="4" ry="9" class="rmap__lake" />
+      <circle cx={sx} cy={sy} r="18" class="rmap__pulse" data-pulse />
+      <circle cx={sx} cy={sy} r="9" class="rmap__home" />
+    </svg>
+
+    <span class="rmap__home-label" style={`left:${pct(sx, W)};top:${pct(sy, H)}`}>
+      <img src="/img/logo.svg" alt="" width="18" height="23" /> Ratzeburg
+    </span>
+
+    {routes.map((r) => (
+      <button
+        type="button"
+        class:list={['rmap__pin', `rmap__pin--${r.label}`, `rmap__pin--${r.art}`, { 'rmap__pin--minor': (r as any).minor }]}
+        style={`left:${pct(r.x, W)};top:${pct(r.y, H)}`}
+        data-ziel={r.feld}
+        data-typ={r.art === 'flughafen' ? 'flughafen' : (['berlin', 'hannover', 'bremen', 'sylt', 'rostock', 'kiel', 'schwerin'].includes(r.id) ? 'fernfahrt' : '')}
+        data-route-id={r.id}
+        aria-label={`${r.name} als Ziel in die Anfrage übernehmen`}
+      >
+        <span class="rmap__dot" aria-hidden="true"></span>
+        <span class="rmap__label" aria-hidden="true">{r.kurz ? `${r.name.replace('Flughafen ', '')} ${r.kurz}` : r.name}</span>
+      </button>
+    ))}
+
+    {abroad.map((a) => (
+      <span class={`rmap__abroad-label rmap__abroad-label--${a.dir}`} style={`left:${pct(a.px, W)};top:${pct(a.py, H)}`}>{a.name}</span>
+    ))}
+  </div>
+  <p class="rmap__legend">
+    <span><i class="lg lg--city" aria-hidden="true"></i> Städte</span>
+    <span><i class="lg lg--air" aria-hidden="true"></i> Flughäfen</span>
+    <span><i class="lg lg--coast" aria-hidden="true"></i> Küste & Inseln</span>
+    <span class="rmap__legend-tip"><Icon name="mouse-pointer-click" size={18} /> Ziel antippen: Es wird in Ihre Anfrage übernommen.</span>
+  </p>
+  <p class="sr-only">Schematische Karte, keine maßstabsgetreue Darstellung. Die Ziele sind Beispiele, wir fahren auch überall sonst hin.</p>
+</div>
+
+<style>
+  .rmap { position: relative; }
+  .rmap__canvas { position: relative; width: 100%; border-radius: var(--radius-lg); overflow: hidden; background: #FBFAF6; border: 1px solid var(--line); }
+  .rmap__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .rmap__sea polygon { fill: var(--water); stroke: #BCD6E1; stroke-width: 1.2; stroke-linejoin: round; }
+  .rmap__land polygon { fill: #FBFAF6; stroke: #BCD6E1; stroke-width: 1.2; }
+  .rmap__sea-label { font: italic 600 15px var(--font-body); fill: var(--water-ink); letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+  .rmap__lake { fill: #BCD6E1; }
+  .rmap__routes path { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; opacity: .82; transition: stroke .2s, stroke-width .2s, opacity .2s; }
+  .rmap__route--flughafen { stroke-dasharray: none; }
+  .rmap__routes path.is-hot { stroke: #C99400; stroke-width: 4; opacity: 1; }
+  .rmap__abroad path { fill: none; stroke: #5F636E; stroke-width: 1.6; stroke-dasharray: .012 .022; opacity: .55; }
+  .rmap__home { fill: var(--yellow); stroke: var(--ink); stroke-width: 3; }
+  .rmap__pulse { fill: var(--yellow); opacity: .35; transform-box: fill-box; transform-origin: center; }
+  @media (prefers-reduced-motion: no-preference) {
+    .rmap__pulse { animation: rmap-pulse 2.6s ease-out infinite; }
+    @keyframes rmap-pulse { 0% { transform: scale(.5); opacity: .55; } 100% { transform: scale(2.2); opacity: 0; } }
+  }
+  .rmap__home-label {
+    position: absolute; transform: translate(-50%, 18px); display: inline-flex; align-items: center; gap: .3rem;
+    background: var(--ink); color: #fff; font: 700 .85rem/1 var(--font-heading); padding: .35rem .55rem .35rem .4rem;
+    border-radius: 999px; white-space: nowrap; pointer-events: none; box-shadow: var(--shadow-md);
+  }
+  .rmap__home-label img { width: 14px; height: 18px; }
+
+  .rmap__pin {
+    position: absolute; width: 28px; height: 28px; margin: -14px 0 0 -14px; padding: 0; border: 0; background: none;
+    cursor: pointer; display: grid; place-items: center; border-radius: 50%; color: var(--ink);
+  }
+  .rmap__pin::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; } /* 44px Trefferfläche */
+  .rmap__dot { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--ink); transition: transform .2s var(--ease-out), background-color .2s; }
+  .rmap__pin--flughafen .rmap__dot { border-radius: 4px; background: var(--yellow); }
+  .rmap__pin--kueste .rmap__dot { border-color: var(--water-ink); }
+  .rmap__label {
+    position: absolute; top: 50%; transform: translateY(-50%); white-space: nowrap;
+    font: 700 .78rem/1 var(--font-heading); background: rgba(255,255,255,.92); padding: .28rem .45rem; border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.08); transition: background-color .2s;
+  }
+  .rmap__pin--left .rmap__label { right: calc(100% + 2px); }
+  .rmap__pin--right .rmap__label { left: calc(100% + 2px); }
+  .rmap__pin--top .rmap__label { top: auto; bottom: calc(100% + 2px); left: 50%; transform: translateX(-50%); }
+  .rmap__pin--none .rmap__label { display: none; }
+  .rmap__pin:hover .rmap__dot, .rmap__pin:focus-visible .rmap__dot, .rmap__pin.is-active .rmap__dot { transform: scale(1.35); background: var(--yellow); }
+  .rmap__pin:hover .rmap__label, .rmap__pin:focus-visible .rmap__label, .rmap__pin.is-active .rmap__label { background: var(--yellow); }
+  .rmap__pin:focus-visible { box-shadow: none; outline-offset: 2px; }
+
+  .rmap__abroad-label {
+    position: absolute; font: 700 .72rem/1 var(--font-heading); text-transform: uppercase; letter-spacing: .08em;
+    color: var(--ink-2); background: var(--paper); padding: .3rem .5rem; border-radius: 999px; border: 1px solid var(--line-strong); white-space: nowrap;
+  }
+  .rmap__abroad-label--n { transform: translate(-50%, 4px); }
+  .rmap__abroad-label--e { transform: translate(calc(-100% - 4px), -50%); }
+  .rmap__abroad-label--w { transform: translate(4px, -50%); }
+  .rmap__abroad-label--s { transform: translate(-50%, calc(-100% - 4px)); }
+
+  .rmap__legend { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1rem 0 0; font-size: .98rem; color: var(--ink-2); align-items: center; }
+  .rmap__legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .rmap__legend-tip { font-weight: 600; color: var(--ink); }
+  .lg { width: 12px; height: 12px; display: inline-block; border: 3px solid var(--ink); border-radius: 50%; background: #fff; }
+  .lg--air { border-radius: 3px; background: var(--yellow); }
+  .lg--coast { border-color: var(--water-ink); }
+
+  @media (max-width: 639px) {
+    .rmap__label { font-size: .68rem; padding: .2rem .3rem; }
+    .rmap__pin--minor .rmap__label { display: none; }
+    .rmap__abroad-label { font-size: .62rem; padding: .22rem .4rem; }
+    .rmap__sea-label { font-size: 20px; }
+  }
+</style>

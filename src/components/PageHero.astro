@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import site from '../data/site.config.json';
+import { telHref } from '../lib/seo';
+interface Props { title: string; lead?: string; eyebrow?: string; crumbs?: { name: string; path: string }[]; actions?: boolean; typ?: string }
+const { title, lead, eyebrow, crumbs = [], actions = false, typ } = Astro.props;
+const formLink = typ ? `#anfrage` : '/#anfrage';
+---
+<section class="page-hero">
+  <div class="container">
+    {crumbs.length > 0 && (
+      <nav class="breadcrumbs" aria-label="Brotkrumen">
+        <ol>
+          <li><a href="/">Start</a></li>
+          {crumbs.map((c, i) => (
+            <li>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.path}>{c.name}</a>}</li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+    {actions && (
+      <div class="page-hero__actions">
+        <a class="btn btn--call btn--lg ring-pulse" href={telHref} data-magnetic><Icon name="phone" /> {site.telefon.anzeige}</a>
+        <a class="btn btn--wa btn--lg" href={formLink} data-magnetic><Icon name="whatsapp" /> Per WhatsApp anfragen</a>
+      </div>
+    )}
+  </div>
+  <svg class="page-hero__road" viewBox="0 0 600 300" aria-hidden="true" focusable="false" preserveAspectRatio="xMaxYMid slice">
+    <path d="M620 40 C 470 40 430 120 520 150 C 610 180 560 270 380 300" fill="none" stroke="#FDBE04" stroke-width="46" stroke-linecap="round" opacity=".35" />
+    <path d="M620 40 C 470 40 430 120 520 150 C 610 180 560 270 380 300" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="14 14" opacity=".9" />
+  </svg>
+</section>
+
+<style>
+  .page-hero__road { position: absolute; right: 0; top: 0; height: 100%; width: min(48%, 520px); z-index: 0; pointer-events: none; }
+  .page-hero .container { position: relative; z-index: 1; }
+  @media (max-width: 767px) { .page-hero__road { opacity: .5; width: 70%; } }
+</style>

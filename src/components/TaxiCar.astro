@@ -1,0 +1,18 @@
+---
+// Eigenes, schematisches Taxi (Seitenansicht, fährt nach rechts). Keine Fremdgrafik.
+interface Props { width?: number; class?: string }
+const { width = 96, class: cls = '' } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 120 56" width={width} height={Math.round(width * 56 / 120)} aria-hidden="true" focusable="false">
+  <ellipse cx="60" cy="52" rx="50" ry="3.5" fill="rgba(23,24,28,.15)" />
+  <path d="M8 38 Q8 27 18 25 L34 22 L46 11 Q50 8 56 8 L80 8 Q86 8 90 12 L100 23 L108 25 Q114 27 114 34 L114 40 Q114 43 111 43 L10 43 Q8 43 8 41 Z" fill="#FDBE04" stroke="#17181C" stroke-width="2.5" stroke-linejoin="round" />
+  <path d="M38 23 L49 13 Q51 11.5 54 11.5 L66 11.5 L66 23 Z" fill="#CFE2EA" stroke="#17181C" stroke-width="2" stroke-linejoin="round" />
+  <path d="M70 11.5 L80 11.5 Q84 11.5 86 14 L94 23 L70 23 Z" fill="#CFE2EA" stroke="#17181C" stroke-width="2" stroke-linejoin="round" />
+  <rect x="56" y="1.5" width="18" height="7" rx="2" fill="#FDBE04" stroke="#17181C" stroke-width="1.8" />
+  <rect x="59" y="3" width="3" height="2" fill="#17181C" /><rect x="65" y="3" width="3" height="2" fill="#17181C" /><rect x="62" y="5" width="3" height="2" fill="#17181C" /><rect x="68" y="5" width="3" height="2" fill="#17181C" />
+  <rect x="12" y="30" width="102" height="5" fill="#17181C" opacity=".9" />
+  <rect x="15" y="31" width="5" height="3" fill="#FDBE04" /><rect x="25" y="31" width="5" height="3" fill="#FDBE04" /><rect x="35" y="31" width="5" height="3" fill="#FDBE04" /><rect x="45" y="31" width="5" height="3" fill="#FDBE04" /><rect x="55" y="31" width="5" height="3" fill="#FDBE04" /><rect x="65" y="31" width="5" height="3" fill="#FDBE04" /><rect x="75" y="31" width="5" height="3" fill="#FDBE04" /><rect x="85" y="31" width="5" height="3" fill="#FDBE04" /><rect x="95" y="31" width="5" height="3" fill="#FDBE04" /><rect x="105" y="31" width="5" height="3" fill="#FDBE04" />
+  <path d="M108 27 L113 28 L113 31 L108 31 Z" fill="#FFF4CC" stroke="#17181C" stroke-width="1.2" />
+  <circle cx="30" cy="43" r="8.5" fill="#17181C" /><circle cx="30" cy="43" r="3.5" fill="#CFCBBF" />
+  <circle cx="92" cy="43" r="8.5" fill="#17181C" /><circle cx="92" cy="43" r="3.5" fill="#CFCBBF" />
+</svg>

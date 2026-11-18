@@ -1,0 +1,47 @@
+---
+// Zeigt nur echte Bewertungen aus src/data/bewertungen.json. Leere Liste = Block wird nicht gerendert.
+import reviews from '../data/bewertungen.json';
+import site from '../data/site.config.json';
+import Icon from './Icon.astro';
+const items = reviews.eintraege.filter((r: any) => !r._beispiel_format_nicht_anzeigen && r.text);
+const star = 'M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z';
+---
+{items.length > 0 && (
+  <section class="section section--sand" aria-labelledby="bewertungen-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Stimmen unserer Fahrgäste</p>
+        <h2 id="bewertungen-titel">Was Fahrgäste über uns sagen</h2>
+        {reviews.gesamt && reviews.anzahl && <p>{reviews.gesamt} von 5 Sternen bei {reviews.anzahl} Google-Bewertungen.</p>}
+      </div>
+      <ul class="reviews">
+        {items.map((r: any, i: number) => (
+          <li class="review" data-reveal style={`--i:${i}`}>
+            <p class="review__stars" role="img" aria-label={`${r.sterne} von 5 Sternen`}>
+              {Array.from({ length: 5 }, (_, k) => (
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d={star} fill={k < r.sterne ? '#FDBE04' : '#E6E3DA'} stroke={k < r.sterne ? '#C99400' : '#CFCBBF'} stroke-width="1" /></svg>
+              ))}
+            </p>
+            <blockquote><p>{r.text}</p></blockquote>
+            <p class="review__meta"><strong>{r.name}</strong> · {r.quelle}</p>
+          </li>
+        ))}
+      </ul>
+      {site.googleProfilUrl && (
+        <p class="reviews__more"><a class="link-arrow" href={site.googleProfilUrl} rel="noopener">Alle Bewertungen bei Google ansehen <Icon name="arrow-right" size={20} /></a></p>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .reviews { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem; }
+  @media (min-width: 768px) { .reviews { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .reviews { grid-template-columns: repeat(3, 1fr); } }
+  .review { margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); }
+  .review__stars { display: flex; gap: 2px; margin: 0 0 .75rem; }
+  .review blockquote { margin: 0 0 1rem; flex: 1; font-size: 1.1rem; }
+  .review__meta { margin: 0; color: var(--ink-3); font-size: .98rem; }
+  .review__meta strong { color: var(--ink); }
+  .reviews__more { margin-top: 1.5rem; }
+</style>

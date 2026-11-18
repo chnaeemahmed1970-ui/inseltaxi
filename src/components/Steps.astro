@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import TaxiCar from './TaxiCar.astro';
+const steps = [
+  { icon: 'message-circle', t: 'Anfrage senden', d: 'Anrufen oder kurz das Formular ausfüllen. WhatsApp öffnet sich mit Ihrer fertigen Nachricht.' },
+  { icon: 'badge-check', t: 'Bestätigung erhalten', d: 'Wir melden uns schnell zurück und bestätigen Ihnen Abholzeit und Fahrzeug.' },
+  { icon: 'map-pin', t: 'Wir holen Sie ab', d: 'Pünktlich vor Ihrer Tür. Gepäck laden wir ein, Sie lehnen sich zurück.' },
+];
+---
+<div class="steps" data-road data-gsap>
+  <div class="steps__road" data-road-line aria-hidden="true">
+    <div class="steps__car" data-road-car><TaxiCar width={92} /></div>
+  </div>
+  <ol class="steps__list">
+    {steps.map((s, i) => (
+      <li class="steps__item" data-reveal style={`--i:${i}`}>
+        <span class="steps__num" aria-hidden="true">{i + 1}</span>
+        <span class="icon-tile"><Icon name={s.icon} size={28} /></span>
+        <h3>{s.t}</h3>
+        <p>{s.d}</p>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .steps { --road-dir: v; position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 0 1rem; }
+  .steps__road {
+    position: relative; grid-row: 1; grid-column: 1; border-radius: 28px; background: #2A2C33;
+    width: 56px; min-height: 100%;
+  }
+  .steps__road::after { /* Mittellinie */
+    content: ''; position: absolute; left: 50%; top: 14px; bottom: 14px; width: 4px; transform: translateX(-50%);
+    background: repeating-linear-gradient(to bottom, var(--yellow) 0 18px, transparent 18px 34px); border-radius: 2px;
+  }
+  .steps__car { position: absolute; left: 50%; top: 6px; z-index: 1; width: 92px; margin-left: -46px; transform-origin: center; }
+  .steps__car :global(svg) { transform: rotate(90deg); }
+  .steps__list { grid-column: 2; list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  .steps__item { margin: 0; position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem 1.5rem 1.25rem; box-shadow: var(--shadow-sm); }
+  .steps__item h3 { margin: 1rem 0 .4rem; }
+  .steps__item p { margin: 0; color: var(--ink-2); }
+  .steps__num { position: absolute; right: 1.25rem; top: .75rem; font: 800 3rem/1 var(--font-heading); color: var(--yellow-100); -webkit-text-stroke: 1.5px var(--yellow-600); }
+
+  @media (min-width: 900px) {
+    .steps { --road-dir: h; grid-template-columns: 1fr; gap: 2rem; }
+    .steps__road { grid-row: 1; grid-column: 1; width: 100%; height: 64px; min-height: 0; border-radius: 32px; }
+    .steps__road::after { left: 18px; right: 18px; top: 50%; bottom: auto; width: auto; height: 4px; transform: translateY(-50%); background: repeating-linear-gradient(to right, var(--yellow) 0 24px, transparent 24px 44px); }
+    .steps__car { left: 12px; top: 50%; margin: -26px 0 0; width: 104px; }
+    .steps__car :global(svg) { transform: none; width: 104px; height: auto; }
+    .steps__list { grid-column: 1; grid-row: 2; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  }
+</style>
