@@ -39,7 +39,7 @@ const formLink = typ ? `/?typ=${typ}#anfrage` : '/#anfrage';
   .ctab__road::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 3px; transform: translateY(-50%); background: repeating-linear-gradient(to right, var(--yellow) 0 22px, transparent 22px 40px); }
   .ctab__car { position: absolute; bottom: 14px; left: -120px; }
   @media (prefers-reduced-motion: no-preference) {
-    .ctab__car { animation: drive 14s linear infinite; }
+    .ctab__car { animation: drive 14s linear 3 forwards; }
     @keyframes drive { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 240px)); } }
   }
   @media (prefers-reduced-motion: reduce) { .ctab__car { left: 8%; } }

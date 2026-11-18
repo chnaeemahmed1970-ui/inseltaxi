@@ -18,7 +18,7 @@ const isCurrent = (href: string) => (href === '/leistungen/' ? path === href : p
 ---
 <header class="site-header" data-header>
   <div class="container site-header__inner">
-    <a href="/" class="brand" aria-label={`${site.firma}, zur Startseite`}>
+    <a href="/" class="brand">
       <img src="/img/logo.svg" alt="" width="36" height="46" class="brand__logo" />
       <span class="brand__text">
         <span class="brand__name">Insel Taxi</span>
@@ -39,9 +39,9 @@ const isCurrent = (href: string) => (href === '/leistungen/' ? path === href : p
     </nav>
 
     <div class="site-header__actions">
-      <a class="btn btn--call header-call ring-pulse" href={telHref} data-magnetic>
+      <a class="btn btn--call header-call ring-pulse" href={telHref} data-magnetic aria-label={`Anrufen: ${site.telefon.anzeige}`}>
         <Icon name="phone" size={20} />
-        <span class="header-call__text"><span class="sr-only">Anrufen: </span>{site.telefon.anzeige}</span>
+        <span class="header-call__text">{site.telefon.anzeige}</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hauptnavigation" data-nav-toggle>
         <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>

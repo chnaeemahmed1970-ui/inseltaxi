@@ -18,7 +18,7 @@ const chipList = (chips ? chips.map((c) => ziele.ziele.find((z) => z.id === c)) 
 const typInfo = data.fahrttypen.find((t) => t.id === typ) ?? data.fahrttypen[0];
 ---
 <form
-  class:list={['rq', { 'rq--compact': compact }]}
+  class:list={['rq', { 'rq--compact': compact, 'rq--wa': mode === 'wa' }]}
   id={id}
   data-request-form
   data-mode={mode}
@@ -27,17 +27,39 @@ const typInfo = data.fahrttypen.find((t) => t.id === typ) ?? data.fahrttypen[0];
   novalidate
   aria-labelledby={f('title')}
 >
-  <div class="rq__head">
-    <h2 class="rq__title" id={f('title')}>{title}</h2>
-    <p class="rq__sub">{mode === 'wa' ? 'In 30 Sekunden ausgefüllt. Wir antworten schnell, rund um die Uhr.' : 'Ihr E-Mail-Programm öffnet sich mit der fertigen Anfrage.'}</p>
-  </div>
+  {mode === 'wa' ? (
+    <>
+      <div class="wa-head">
+        <span class="wa-head__avatar"><img src="/img/logo.svg" alt="" width="26" height="33" /></span>
+        <div class="wa-head__who">
+          <h2 class="wa-head__name" id={f('title')}>Insel Taxi<span class="sr-only">: {title}</span></h2>
+          <p class="wa-head__status">rund um die Uhr erreichbar</p>
+        </div>
+        <Icon name="whatsapp" size={26} class="wa-head__logo" />
+      </div>
+    </>
+  ) : (
+    <div class="rq__head">
+      <h2 class="rq__title" id={f('title')}>{title}</h2>
+      <p class="rq__sub">Ihr E-Mail-Programm öffnet sich mit der fertigen Anfrage.</p>
+    </div>
+  )}
+
+  <div class:list={[{ 'wa-chat': mode === 'wa' }]}>
+  {mode === 'wa' && (
+    <div class="wa-in">
+      <p><strong>{title}</strong></p>
+      <p>Hallo, hier ist Insel Taxi. Wohin darf es gehen? Füllen Sie kurz die Felder aus, Ihre Nachricht erscheint unten fertig zum Senden.</p>
+      <span class="wa-meta" aria-hidden="true">Insel Taxi</span>
+    </div>
+  )}
 
   <div class="rq__summary" role="alert" tabindex="-1" hidden data-summary>
     <p class="rq__summary-title"><Icon name="info" size={20} /> Bitte prüfen Sie noch:</p>
     <ul data-summary-list></ul>
   </div>
 
-  <div class="rq__grid">
+  <div class:list={['rq__grid', { 'wa-card': mode === 'wa' }]}>
     <div class="field rq__span2">
       <label for={f('typ')}>Fahrttyp</label>
       <select class="input" id={f('typ')} name="typ" data-field="typ">
@@ -113,28 +135,35 @@ const typInfo = data.fahrttypen.find((t) => t.id === typ) ?? data.fahrttypen[0];
     </div>
   </div>
 
-  <details class="rq__preview" data-preview-wrap>
-    <summary>Vorschau Ihrer Nachricht</summary>
-    <pre data-preview></pre>
-  </details>
-
   {mode === 'wa' ? (
     <>
-      <button type="submit" class="btn btn--wa btn--lg btn--block rq__submit" data-magnetic>
-        <Icon name="whatsapp" size={24} /> Per WhatsApp anfragen
+      <div class="wa-out">
+        <p class="sr-only">Vorschau Ihrer Nachricht:</p>
+        <pre data-preview></pre>
+        <span class="wa-meta" aria-hidden="true">Ihre Nachricht <Icon name="check-check" size={16} class="wa-ticks" /></span>
+      </div>
+      <button type="submit" class="btn btn--wa btn--lg btn--block rq__submit" data-magnetic data-submit>
+        <Icon name="send-horizontal" size={22} /> <span data-submit-label>Per WhatsApp senden</span>
       </button>
+      <p class="rq__status" role="status" aria-live="polite" data-status></p>
       <p class="rq__privacy">Es öffnet sich WhatsApp mit Ihrer vorbereiteten Nachricht. Erst wenn Sie dort auf Senden tippen, werden Ihre Angaben übertragen. <a href="/datenschutz/#whatsapp">Datenschutz</a></p>
       <p class="rq__alt"><button type="button" class="rq__mail-link" data-send-mail>Lieber per E-Mail anfragen?</button></p>
     </>
   ) : (
     <>
+      <details class="rq__preview" data-preview-wrap>
+        <summary>Vorschau Ihrer Nachricht</summary>
+        <pre data-preview></pre>
+      </details>
       <button type="submit" class="btn btn--lg btn--block rq__submit" data-magnetic>
         <Icon name="mail" size={22} /> E-Mail-Anfrage vorbereiten
       </button>
+      <p class="rq__status" role="status" aria-live="polite" data-status></p>
       <p class="rq__privacy">Ihr E-Mail-Programm öffnet sich mit der fertigen Nachricht an {site.email}. Erst wenn Sie dort senden, werden Ihre Angaben übertragen. Auf dieser Webseite wird nichts gespeichert. <a href="/datenschutz/#kontakt">Datenschutz</a></p>
       <p class="rq__alt"><button type="button" class="rq__mail-link" data-send-wa>Lieber per WhatsApp?</button></p>
     </>
   )}
+  </div>
 </form>
 
 <style>
@@ -201,6 +230,46 @@ const typInfo = data.fahrttypen.find((t) => t.id === typ) ?? data.fahrttypen[0];
   .rq__preview pre { margin: 0; padding: 0 1rem 1rem; font: 400 1rem/1.5 var(--font-body); white-space: pre-wrap; word-break: break-word; }
 
   .rq__submit { margin-top: 1.25rem; }
+  .rq__status { margin: .6rem 0 0; font-weight: 700; color: var(--success); text-align: center; min-height: 0; }
+  .rq__status:empty { display: none; }
+
+  /* ---------- WhatsApp-Stil ---------- */
+  .rq--wa { padding: 0; overflow: hidden; border: 0; background: #EFEAE2; }
+  .rq--wa::before { display: none; }
+  .wa-head { display: flex; align-items: center; gap: .75rem; background: #075E54; color: #fff; padding: .85rem 1.1rem; }
+  .wa-head__avatar { width: 46px; height: 46px; border-radius: 50%; background: #fff; display: grid; place-items: center; flex: none; }
+  .wa-head__avatar img { width: 26px; height: 33px; }
+  .wa-head__who { flex: 1; min-width: 0; }
+  .wa-head__name { font-size: 1.15rem; margin: 0; color: #fff; letter-spacing: 0; }
+  .wa-head__status { margin: 0; font-size: .9rem; color: #D7F3EC; display: flex; align-items: center; gap: .4rem; }
+  .wa-head__status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #25D366; }
+  :global(.wa-head__logo) { color: #fff; opacity: .9; flex: none; }
+  .wa-chat {
+    padding: 1rem clamp(.75rem, .5rem + 1vw, 1.25rem) 1.25rem;
+    background-color: #EFEAE2;
+    background-image:
+      radial-gradient(circle at 12px 12px, rgba(7,94,84,.07) 2px, transparent 2.5px),
+      radial-gradient(circle at 36px 30px, rgba(253,190,4,.12) 3px, transparent 3.5px);
+    background-size: 48px 48px;
+  }
+  .wa-in, .wa-out { position: relative; max-width: 92%; border-radius: 12px; padding: .65rem .85rem 1.4rem; box-shadow: 0 1px 1px rgba(0,0,0,.12); font-size: 1.02rem; line-height: 1.45; }
+  .wa-in { background: #fff; border-top-left-radius: 0; margin: 0 0 1rem .5rem; }
+  .wa-in::before { content: ''; position: absolute; left: -8px; top: 0; border-width: 0 10px 10px 0; border-style: solid; border-color: transparent #fff transparent transparent; }
+  .wa-in p { margin: 0 0 .3rem; }
+  .wa-out { background: #D9FDD3; border-top-right-radius: 0; margin: 1rem .5rem 0 auto; }
+  .wa-out::before { content: ''; position: absolute; right: -8px; top: 0; border-width: 0 0 10px 10px; border-style: solid; border-color: transparent transparent transparent #D9FDD3; }
+  .wa-out pre { margin: 0; font: 400 1rem/1.45 var(--font-body); white-space: pre-wrap; word-break: break-word; color: var(--ink); }
+  .wa-meta { position: absolute; right: .7rem; bottom: .35rem; display: inline-flex; align-items: center; gap: .25rem; font-size: .78rem; color: #55605B; }
+  :global(.wa-ticks) { color: #2E8BC0; }
+  .wa-card { background: #fff; border-radius: 14px; padding: 1.1rem; box-shadow: 0 1px 1px rgba(0,0,0,.1); }
+  .rq--wa .rq__summary { margin: 0 0 1rem; }
+  .rq--wa .rq__submit { --bg: #075E54; border-radius: 999px; }
+  .rq--wa .rq__submit:hover { --bg: #054C44; }
+  .rq--wa .rq__privacy { color: #3E4744; }
+  .rq--wa .rq__privacy a { color: #075E54; }
+  .rq--wa .rq__mail-link { color: #3E4744; }
+  .rq--wa .chip[aria-pressed="true"] { background: #D9FDD3; border-color: #075E54; }
+  .rq--wa .switch input:checked + label .switch__track { background: #075E54; }
   .rq__privacy { font-size: .95rem; color: var(--ink-3); margin: .85rem 0 0; }
   .rq__alt { margin: .5rem 0 0; text-align: center; }
   .rq__mail-link {

@@ -231,3 +231,30 @@ Before delivering any UI code, verify:
 - [ ] Responsive: 375px, 768px, 1024px, 1440px
 - [ ] No content hidden behind fixed navbars
 - [ ] No horizontal scroll on mobile
+
+---
+
+## Projekt-Anpassungen Insel Taxi (überschreiben die Werte oben)
+
+Erzeugt mit `search.py "taxi transport service professional trust yellow" --design-system --persist`. Übernommen: **Stil Minimalism & Swiss**, **Schriften Lexend + Source Sans 3** (Corporate Trust, gute Lesbarkeit für ältere Menschen), Abstands- und Schattenskala, GSAP-Preset „Stagger/Scroll Reveal Standard“.
+
+**Nicht übernommen: die Farbpalette.** Der Skill lieferte Dunkelblau mit blauem Akzent (`#1E293B`/`#2563EB`). Vorgabe des Kunden: Das Logo bestimmt die Farben. Eine Farbsuche nach Taxi/Gelb ergab keinen passenden Treffer (Treffer: Pflanzen-App, Meme-Generator). Eigene Palette, aus dem Logo extrahiert (Pixelanalyse der Logodatei):
+
+| Rolle | Wert | Hinweis |
+|---|---|---|
+| Marke Gelb | `#FDBE04` | exakt aus dem Logo, nur mit dunkler Schrift (Kontrast mit `#17181C`: 11:1) |
+| Gelb Hover | `#E9AE00` | |
+| Gelb hell | `#FFF4CC` / `#FFFAEB` | Flächen |
+| Text | `#17181C` | nah am Logo-Schwarz `#1A1A1A`, kein reines Schwarz |
+| Sekundärtext | `#464953` / `#5F636E` | 9:1 / 6:1 auf Weiß |
+| WhatsApp-Grün | `#075E54` / `#0B6B4B` | weiße Schrift > 6:1 |
+| Wasser (Insel-Motiv) | `#E3EFF4` / `#1D5670` | Karte, Hinweise |
+| Fehler | `#B42318` | |
+
+**Motiv:** Schachbrett des Taxi-Dachlichts (Eyebrows, Trennlinien, Formular) + die geschwungene Straße aus dem Logo (Hero, Seitenköpfe, fahrendes Taxi).
+
+**Icons:** Lucide (Outline, 2px), WhatsApp aus Simple Icons. Icon-Suche im Skill ohne Treffer.
+
+**Formular:** WhatsApp-Chat-Optik (Kopfzeile, Chat-Hintergrund, Sprechblasen). Keine Stilvorlage im Skill gefunden; UX-Regeln aus dem Skill angewendet: sichtbare Labels, Validierung beim Verlassen des Feldes, Fehlerübersicht mit Fokus, Rückmeldung nach dem Absenden.
+
+Die maßgeblichen Werte stehen als CSS-Variablen in `src/styles/global.css` (`:root`). `tokens.css`/`tokens.json` in diesem Ordner sind die unveränderte Skill-Ausgabe.

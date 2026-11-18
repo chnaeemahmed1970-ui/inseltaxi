@@ -22,8 +22,9 @@ const features = [
     eyebrow="Flotte"
     crumbs={[{ name: 'Flotte', path: '/flotte/' }]}
   />
-  <section class="section">
+  <section class="section" aria-labelledby="waehler-titel">
     <div class="container">
+      <h2 id="waehler-titel" class="sr-only">Fahrzeug nach Personenzahl wählen</h2>
       <FleetPicker />
     </div>
   </section>

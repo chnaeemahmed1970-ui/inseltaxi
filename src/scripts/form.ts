@@ -233,11 +233,18 @@ function setup(form: HTMLFormElement) {
     openUrl(`mailto:${form.dataset.mail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildMessage())}`, false);
   };
 
+  const status = form.querySelector<HTMLElement>('[data-status]');
+  const feedback = (msg: string) => {
+    if (!status) return;
+    status.textContent = msg;
+    setTimeout(() => { status.textContent = ''; }, 8000);
+  };
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!validateAll()) return;
-    mode === 'wa' ? sendWa() : sendMail();
+    if (mode === 'wa') { feedback('WhatsApp wird geöffnet. Bitte tippen Sie dort auf Senden.'); sendWa(); }
+    else { feedback('Ihr E-Mail-Programm wird geöffnet. Bitte senden Sie die Nachricht dort ab.'); sendMail(); }
   });
-  form.querySelector('[data-send-mail]')?.addEventListener('click', () => { if (validateAll()) sendMail(); });
-  form.querySelector('[data-send-wa]')?.addEventListener('click', () => { if (validateAll()) sendWa(); });
+  form.querySelector('[data-send-mail]')?.addEventListener('click', () => { if (validateAll()) { feedback('Ihr E-Mail-Programm wird geöffnet.'); sendMail(); } });
+  form.querySelector('[data-send-wa]')?.addEventListener('click', () => { if (validateAll()) { feedback('WhatsApp wird geöffnet.'); sendWa(); } });
 }
