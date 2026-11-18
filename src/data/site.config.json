@@ -1,0 +1,66 @@
+{
+  "_hinweis": "Einzige Quelle der Wahrheit für alle Firmendaten. Änderungen hier wirken auf der ganzen Webseite. Steuernummer gehört NICHT hierher.",
+  "firma": "Insel Taxi",
+  "slogan": "Insel Taxi aus der Inselstadt Ratzeburg",
+  "inhaber": "Naeem Ahmed",
+  "rechtsform": "Einzelunternehmen",
+  "berufsbezeichnung": "Taxiunternehmer (verliehen in der Bundesrepublik Deutschland)",
+  "adresse": {
+    "strasse": "Zittschower Weg 11a",
+    "plz": "23909",
+    "ort": "Ratzeburg",
+    "land": "Deutschland",
+    "landCode": "DE",
+    "geo": { "lat": 53.6995, "lng": 10.7766 }
+  },
+  "telefon": {
+    "anzeige": "04541 802080",
+    "e164": "+494541802080"
+  },
+  "whatsapp": {
+    "anzeige": "0173 9189239",
+    "nummer": "491739189239"
+  },
+  "email": "info@inseltaxi-ratzeburg.de",
+  "domain": "inseltaxi-ratzeburg.de",
+  "url": "https://inseltaxi-ratzeburg.de",
+  "ustId": "DE221613879",
+  "ik": "600138210",
+  "erreichbarkeit": "rund um die Uhr, 7 Tage die Woche",
+  "zahlungsarten": ["Bar", "EC-/Kartenzahlung", "PayPal", "Rechnung (Geschäftskunden)"],
+  "fahrzeuge": [
+    { "id": "suv", "name": "SUV", "plaetze": 6, "kurz": "Komfortabel für bis zu 6 Personen" },
+    { "id": "grossraum", "name": "Großraumtaxi", "plaetze": 8, "kurz": "Viel Platz für bis zu 8 Personen" }
+  ],
+  "googleProfilUrl": "",
+  "behoerde": {
+    "name": "Kreis Herzogtum Lauenburg, Der Landrat, Fachdienst Straßenverkehr",
+    "strasse": "Am Markt 4",
+    "plz": "23909",
+    "ort": "Ratzeburg",
+    "telefon": "04541 801-010 (Zentrale)",
+    "web": "https://www.kreis-rz.de",
+    "_pruefen": "Anschrift/Telefon vor Livegang prüfen (siehe README)"
+  },
+  "datenschutzAufsicht": {
+    "name": "Unabhängiges Landeszentrum für Datenschutz Schleswig-Holstein (ULD)",
+    "strasse": "Holstenstraße 98",
+    "plz": "24103",
+    "ort": "Kiel",
+    "telefon": "0431 988-1200",
+    "web": "https://www.datenschutzzentrum.de"
+  },
+  "hosting": {
+    "_hinweis": "Nach Wahl des Hosters eintragen (Name, Anschrift, Link zur Datenschutzerklärung). Erscheint in der Datenschutzerklärung.",
+    "name": "",
+    "anschrift": "",
+    "datenschutzUrl": "",
+    "logDauerTage": 7
+  },
+  "dashcam": {
+    "_hinweis": "Speicherdauer und Tonaufzeichnung bitte bestätigen. Solange null, zeigt die Datenschutzerklärung einen gut sichtbaren Hinweis 'wird ergänzt'.",
+    "speicherdauer": null,
+    "tonaufnahme": null
+  },
+  "rechtsStand": "18.11.2026"
+}

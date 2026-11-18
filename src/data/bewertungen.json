@@ -1,0 +1,15 @@
+{
+  "_hinweis": "Nur echte Bewertungen eintragen, Wortlaut unverändert (Kürzungen nur mit […]). Name als Vorname + Initial des Nachnamens. Solange die Liste leer ist, wird der Bewertungsblock nicht angezeigt. Gesamtnote/Anzahl nur eintragen, wenn sie belegt sind.",
+  "gesamt": null,
+  "anzahl": null,
+  "eintraege": [
+    {
+      "_beispiel_format_nicht_anzeigen": true,
+      "name": "Vorname N.",
+      "sterne": 5,
+      "datum": "2026-01-01",
+      "text": "Originaltext der Bewertung",
+      "quelle": "Google-Bewertung"
+    }
+  ]
+}

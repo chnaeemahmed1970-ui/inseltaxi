@@ -1,0 +1,61 @@
+---
+import site from '../data/site.config.json';
+import Icon from './Icon.astro';
+import { telHref } from '../lib/seo';
+const waText = 'Hallo Insel Taxi, ich möchte eine Fahrt anfragen.';
+---
+<div class="sticky-cta" data-sticky-cta>
+  <a class="sticky-cta__btn sticky-cta__btn--call ring-pulse" href={telHref} data-magnetic>
+    <Icon name="phone" size={22} />
+    <span><span class="sticky-cta__label">Anrufen</span><span class="sticky-cta__sub">{site.telefon.anzeige}</span></span>
+  </a>
+  <a class="sticky-cta__btn sticky-cta__btn--wa" href={`https://wa.me/${site.whatsapp.nummer}?text=${encodeURIComponent(waText)}`} rel="noopener" data-magnetic data-wa-quick>
+    <Icon name="whatsapp" size={22} />
+    <span><span class="sticky-cta__label">WhatsApp</span><span class="sticky-cta__sub">Anfrage senden</span></span>
+  </a>
+</div>
+
+<style>
+  :root { --sticky-h: calc(76px + env(safe-area-inset-bottom)); }
+  .sticky-cta {
+    position: fixed; z-index: 60; left: 0; right: 0; bottom: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
+    padding: .6rem .75rem calc(.6rem + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.96); border-top: 1px solid var(--line);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 -10px 30px -20px rgba(23,24,28,.4);
+  }
+  .sticky-cta__btn {
+    display: flex; align-items: center; justify-content: center; gap: .6rem;
+    min-height: 56px; border-radius: 14px; text-decoration: none; padding: .4rem .75rem;
+    font-family: var(--font-heading); font-weight: 700; line-height: 1.1;
+    transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out), background-color .15s;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .sticky-cta__btn:active { transform: scale(.97); }
+  .sticky-cta__btn > span { display: flex; flex-direction: column; }
+  .sticky-cta__label { font-size: 1.05rem; }
+  .sticky-cta__sub { font-family: var(--font-body); font-weight: 600; font-size: .82rem; opacity: .9; }
+  .sticky-cta__btn--call { background: var(--yellow); color: var(--ink); }
+  .sticky-cta__btn--wa { background: var(--wa); color: #fff; }
+
+  @media (max-width: 359px) { .sticky-cta__sub { display: none; } }
+
+  /* Desktop: schwebende Pille rechts unten, erscheint nach dem Hero */
+  @media (min-width: 900px) {
+    :root { --sticky-h: 0px; }
+    .sticky-cta {
+      left: auto; right: 24px; bottom: 24px; padding: .4rem; gap: .4rem; grid-template-columns: auto auto;
+      border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow-lg);
+      opacity: 0; transform: translateY(16px) scale(.98); pointer-events: none; visibility: hidden;
+      transition: opacity .35s var(--ease-out), transform .35s var(--ease-out), visibility 0s linear .35s;
+    }
+    .sticky-cta.is-visible { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition-delay: 0s; }
+    .sticky-cta__btn { border-radius: 999px; min-height: 52px; padding: .35rem 1.15rem .35rem .9rem; }
+    .sticky-cta__btn:hover { box-shadow: var(--shadow-md); }
+    .sticky-cta__btn--call:hover { background: var(--yellow-600); }
+    .sticky-cta__btn--wa:hover { background: var(--wa-hover); }
+  }
+  @media (prefers-reduced-motion: reduce) { .sticky-cta { transition: none !important; } }
+  @media print { .sticky-cta { display: none; } }
+</style>

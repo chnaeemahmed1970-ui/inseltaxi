@@ -1,0 +1,30 @@
+{
+  "_hinweis": "Wortlaut und Zahlen exakt aus der Kreisverordnung über Beförderungsentgelte für den Gelegenheitsverkehr mit Taxen im Kreis Herzogtum Lauenburg vom 25.09.2026, in Kraft ab 01.10.2026. Bei einer neuen Verordnung nur diese Datei und das PDF in public/downloads ersetzen.",
+  "titel": "Kreisverordnung über Beförderungsentgelte für den Gelegenheitsverkehr mit Taxen im Kreis Herzogtum Lauenburg",
+  "verordnungVom": "25.09.2026",
+  "gueltigAb": "01.10.2026",
+  "gueltigAbISO": "2026-10-01",
+  "herausgeber": "Kreis Herzogtum Lauenburg, Der Landrat",
+  "pdf": "/downloads/taxitarif-kreis-herzogtum-lauenburg-2026-10-01.pdf",
+  "festpreisHinweis": "Die Beförderungsentgelte für den Gelegenheitsverkehr mit Taxen innerhalb des Kreises Herzogtum Lauenburg sind Festpreise, die weder über- noch unterschritten werden dürfen.",
+  "ausserhalbHinweis": "Bei Fahrten, deren Ziel außerhalb des Geltungsbereiches dieser Verordnung liegen, hat der/die Taxenfahrer*in den Fahrgast vor Fahrtbeginn darauf hinzuweisen, dass das Beförderungsentgelt für die gesamte Fahrstrecke frei zu vereinbaren ist. Kommt keine Vereinbarung zustande, gelten die für den Pflichtfahrbereich festgesetzten Beförderungsentgelte als vereinbart.",
+  "grundpreis": { "label": "Grundpreis", "wert": "5,50 €", "text": "In jeder Tarifstufe beträgt der Grundpreis für die Inanspruchnahme einer Taxe 5,50 €." },
+  "fortschaltung": "Das zu entrichtende Beförderungsentgelt ist in Fortschaltungen von 0,10 € zu berechnen.",
+  "kilometerIntro": "Der Preis für den besetzt gefahrenen Kilometer beträgt bei Fahrten mit maximal vier Fahrgästen:",
+  "tarifstufen": [
+    { "code": "T1", "zeit": "tag", "label": "werktags von 06:00 Uhr bis 22:00 Uhr bis 3 km", "wert": "2,90 €/km" },
+    { "code": "T2", "zeit": "tag", "label": "werktags von 06:00 Uhr bis 22:00 Uhr über 3 km", "wert": "2,70 €/km" },
+    { "code": "T1N", "zeit": "nacht", "label": "werktags von 22:00 Uhr bis 06:00 Uhr sowie sonn- und feiertags bis 3 km", "wert": "3,20 €/km" },
+    { "code": "T2N", "zeit": "nacht", "label": "werktags von 22:00 Uhr bis 06:00 Uhr sowie sonn- und feiertags über 3 km", "wert": "2,90 €/km" }
+  ],
+  "wartezeit": { "label": "Wartezeit", "wert": "50,00 €/Std.", "text": "Die Wartezeit wird mit jeweils 50,00 €/Std. berechnet." },
+  "grossraum": { "label": "Großraumtaxi-Zuschlag", "wert": "12,00 €", "text": "Für die Inanspruchnahme eines Großraumtaxis, das nach Feld S.1 der Zulassungsbescheinigung Teil 1 mehr als 5 Sitzplätze hat, beträgt der Zuschlag bei einer Beförderung, von mehr als 4 Fahrgästen 12,00 €" },
+  "anfahrt": "Die Anfahrt einer Taxe erfolgt grundsätzlich kostenlos, soweit nicht nach Abs.4 eine abweichende Regelung vorgesehen ist.",
+  "tarifA": "Tarif A gilt für Anfahrten, die zu einem Ort erfolgen, von welchem aus die Fahrt nicht zur Betriebssitzgemeinde des Taxis zurückführt. Die in dem Anfahrtstarif (TA) zurückgelegte Stecke ist beim Umschalten in den Besetzttarif zu berücksichtigen. Es ist ein Entgelt für die Wegstrecke entsprechend § 2 zu berechnen. Wartezeiten werden für die Anfahrt nicht berechnet.",
+  "gepaeck": "Gepäck ist unentgeltlich zu befördern (Handgepäck, Reisekoffer, Rollatoren).",
+  "gepaeckEinschraenkung": "Ein Anspruch auf Gepäckbeförderung besteht nur, soweit die Verkehrssicherheit nicht beeinträchtigt und das zulässige Gesamtgewicht bzw. die vorhandene Ladekapazität nicht überschritten wird.",
+  "sonderausstattung": "Eine vom Fahrgast verlangte, besondere Ausstattung der Taxe (z.B. Hochzeitsfahrt oder Fahrradbeförderung) darf je nach Aufwand besonders berechnet werden.",
+  "zurueckweisung": "Für Bestellungen innerhalb der Betriebssitzgemeinde des Unternehmers wird ein Grundpreis von 5,50 € fällig.",
+  "zahlung": "Das Beförderungsentgelt in Höhe des vom Taxameter angezeigten Fahrpreises ist grundsätzlich nach Beendigung der Fahrt zu entrichten.",
+  "vorauszahlung": "In begründeten Ausnahmefällen kann der/die Taxenfahrer*in die Fahrt von der Entrichtung einer angemessenen Vorauszahlung abhängig machen."
+}

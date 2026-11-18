@@ -1,0 +1,174 @@
+{
+  "_hinweis": "Ziele für Routenkarte und Ziel-Chips. 'feld' ist der Text, der ins Formularfeld 'Ziel' übernommen wird. Koordinaten nur für die schematische Karte.",
+  "start": {
+    "name": "Ratzeburg",
+    "lat": 53.699,
+    "lng": 10.757
+  },
+  "ziele": [
+    {
+      "id": "ham",
+      "name": "Flughafen Hamburg",
+      "kurz": "HAM",
+      "feld": "Flughafen Hamburg (HAM)",
+      "lat": 53.63,
+      "lng": 9.988,
+      "art": "flughafen",
+      "chip": true,
+      "label": "top"
+    },
+    {
+      "id": "hamburg",
+      "name": "Hamburg",
+      "feld": "Hamburg",
+      "lat": 53.551,
+      "lng": 9.993,
+      "art": "stadt",
+      "chip": true,
+      "label": "left",
+      "minor": true
+    },
+    {
+      "id": "luebeck",
+      "name": "Lübeck",
+      "feld": "Lübeck",
+      "lat": 53.866,
+      "lng": 10.686,
+      "art": "stadt",
+      "chip": true,
+      "label": "left"
+    },
+    {
+      "id": "lba",
+      "name": "Flughafen Lübeck",
+      "kurz": "LBC",
+      "feld": "Flughafen Lübeck (LBC)",
+      "lat": 53.805,
+      "lng": 10.719,
+      "art": "flughafen",
+      "chip": true,
+      "label": "none"
+    },
+    {
+      "id": "travemuende",
+      "name": "Travemünde",
+      "feld": "Travemünde (Ostsee)",
+      "lat": 53.962,
+      "lng": 10.87,
+      "art": "kueste",
+      "chip": true,
+      "label": "right"
+    },
+    {
+      "id": "kiel",
+      "name": "Kiel",
+      "feld": "Kiel",
+      "lat": 54.323,
+      "lng": 10.135,
+      "art": "stadt",
+      "chip": true,
+      "label": "left"
+    },
+    {
+      "id": "schwerin",
+      "name": "Schwerin",
+      "feld": "Schwerin",
+      "lat": 53.635,
+      "lng": 11.401,
+      "art": "stadt",
+      "chip": true,
+      "label": "right"
+    },
+    {
+      "id": "rostock",
+      "name": "Rostock",
+      "feld": "Rostock",
+      "lat": 54.092,
+      "lng": 12.099,
+      "art": "stadt",
+      "chip": false,
+      "label": "right"
+    },
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "feld": "Berlin",
+      "lat": 52.52,
+      "lng": 13.405,
+      "art": "stadt",
+      "chip": true,
+      "label": "top"
+    },
+    {
+      "id": "ber",
+      "name": "Flughafen Berlin",
+      "kurz": "BER",
+      "feld": "Flughafen Berlin Brandenburg (BER)",
+      "lat": 52.366,
+      "lng": 13.503,
+      "art": "flughafen",
+      "chip": true,
+      "label": "left"
+    },
+    {
+      "id": "hannover",
+      "name": "Hannover",
+      "feld": "Hannover / Flughafen Hannover (HAJ)",
+      "lat": 52.375,
+      "lng": 9.732,
+      "art": "stadt",
+      "chip": true,
+      "label": "left"
+    },
+    {
+      "id": "bremen",
+      "name": "Bremen",
+      "feld": "Bremen / Flughafen Bremen (BRE)",
+      "lat": 53.079,
+      "lng": 8.801,
+      "art": "stadt",
+      "chip": true,
+      "label": "right"
+    },
+    {
+      "id": "sylt",
+      "name": "Sylt",
+      "feld": "Sylt",
+      "lat": 54.907,
+      "lng": 8.31,
+      "art": "kueste",
+      "chip": true,
+      "label": "right"
+    },
+    {
+      "id": "timmendorf",
+      "name": "Timmendorfer Strand",
+      "feld": "Timmendorfer Strand (Ostsee)",
+      "lat": 54.003,
+      "lng": 10.778,
+      "art": "kueste",
+      "chip": false,
+      "label": "none"
+    }
+  ],
+  "ausland": [
+    {
+      "name": "Dänemark",
+      "x": 0.42,
+      "y": 0.02,
+      "dir": "n"
+    },
+    {
+      "name": "Polen",
+      "x": 0.99,
+      "y": 0.42,
+      "dir": "e"
+    },
+    {
+      "name": "Niederlande",
+      "x": 0.01,
+      "y": 0.5,
+      "dir": "w"
+    }
+  ]
+}

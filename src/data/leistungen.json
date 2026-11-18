@@ -1,0 +1,25 @@
+{
+  "fahrttypen": [
+    { "id": "alltag", "label": "Taxifahrt / Alltag", "hint": "z. B. Einkauf, Arzttermin, Abholung vom Bahnhof, Gepäck?" },
+    { "id": "flughafen", "label": "Flughafentransfer", "hint": "Flugnummer, Gepäck, Kindersitz? Namensschild gewünscht?" },
+    { "id": "krankenfahrt", "label": "Krankenfahrt", "hint": "Rollator? Arzttermin um wie viel Uhr? Verordnung vorhanden?" },
+    { "id": "serienfahrt", "label": "Serienfahrt (Dialyse, Chemo, Reha …)", "hint": "Welche Wochentage und Uhrzeiten? Wie lange läuft die Behandlung?" },
+    { "id": "geschaeft", "label": "Geschäftsfahrt auf Rechnung", "hint": "Firma und Rechnungsanschrift? Kostenstelle? Rückfahrt?" },
+    { "id": "kinder", "label": "Kinderfahrt", "hint": "Alter der Kinder? Wer übergibt und wer nimmt in Empfang?" },
+    { "id": "kurier", "label": "Kurierfahrt / Laborfahrt", "hint": "Was wird transportiert (Größe, Gewicht)? Empfänger vor Ort?" },
+    { "id": "fernfahrt", "label": "Fernfahrt / Reise", "hint": "Wie viel Gepäck? Gewünschte Pausen? Rückfahrt?" },
+    { "id": "gruppe", "label": "Gruppenfahrt (Großraumtaxi)", "hint": "Anlass? Gepäck? Mehrere Abholorte?" },
+    { "id": "bahnhof", "label": "Bahnhof / Hafen / Fähre", "hint": "Zug- oder Fährverbindung? Abfahrtszeit? Gepäck?" },
+    { "id": "sonstiges", "label": "Sonstiges", "hint": "Erzählen Sie uns kurz, worum es geht." }
+  ],
+  "leistungen": [
+    { "slug": "flughafentransfer", "typ": "flughafen", "icon": "plane", "titel": "Flughafentransfer", "kurz": "Pünktlich zum Abflug, auf Wunsch mit Namensschild bei der Ankunft.", "kachel": "Flughafen" },
+    { "slug": "krankenfahrten", "typ": "krankenfahrt", "icon": "hospital", "titel": "Krankenfahrten & Serienfahrten", "kurz": "Dialyse, Chemo, Reha, Therapie. Direktabrechnung mit Ihrer Krankenkasse.", "kachel": "Krankenfahrt" },
+    { "slug": "geschaeftsfahrten", "typ": "geschaeft", "icon": "briefcase", "titel": "Geschäftsfahrten auf Rechnung", "kurz": "Kundentermine, Flughafen, Bahnhof. Bequem per Sammelrechnung.", "kachel": "Geschäftlich" },
+    { "slug": "kinder-und-kurierfahrten", "typ": "kinder", "icon": "baby", "titel": "Kinderfahrten & Kurierfahrten", "kurz": "Sitzerhöhungen sind an Bord. Dazu Eil- und Laborfahrten.", "kachel": "Kinder & Kurier" },
+    { "slug": "fernfahrten", "typ": "fernfahrt", "icon": "route", "titel": "Fernfahrten & Reisen", "kurz": "Deutschlandweit und ins Ausland. Tür zu Tür, mit Gepäck.", "kachel": "Fernfahrt" },
+    { "slug": "grossraumtaxi", "typ": "gruppe", "icon": "users", "titel": "Großraumtaxi & Gruppen", "kurz": "Bis 8 Plätze für Familien, Vereine, Ausflüge und Feiern.", "kachel": "Gruppe" },
+    { "slug": "bahnhof-und-hafen", "typ": "bahnhof", "icon": "train-front", "titel": "Bahnhof, Hafen & Fähre", "kurz": "Zum Zug, zur Fähre oder zum Kreuzfahrtterminal, ohne Parkplatzsuche.", "kachel": "Bahnhof & Hafen" },
+    { "slug": "taxi-alltagsfahrten", "typ": "alltag", "icon": "car", "titel": "Taxi & Alltagsfahrten", "kurz": "Arzt, Einkauf, Termin, Feierabend. Kurz oder lang, Tag und Nacht.", "kachel": "Alltag" }
+  ]
+}

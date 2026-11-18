@@ -1,0 +1,80 @@
+---
+import site from '../data/site.config.json';
+import data from '../data/leistungen.json';
+import Icon from './Icon.astro';
+import { telHref, waHref, mailHref } from '../lib/seo';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="checker-rule" aria-hidden="true"></div>
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a href="/" class="f-brand" aria-label={`${site.firma}, zur Startseite`}>
+        <img src="/img/logo.svg" alt="" width="44" height="57" loading="lazy" />
+        <span>Insel Taxi</span>
+      </a>
+      <p>{site.slogan}. Ratzeburg ist unser Zuhause, nicht unsere Grenze: Wir fahren Sie deutschlandweit und ins Ausland.</p>
+      <p class="f-247"><span class="live-dot" aria-hidden="true"></span> Rund um die Uhr erreichbar, auch an Sonn- und Feiertagen.</p>
+    </div>
+
+    <div>
+      <h2 class="f-title">Kontakt</h2>
+      <ul class="f-contact">
+        <li><a href={telHref}><Icon name="phone" size={20} /> {site.telefon.anzeige}</a></li>
+        <li><a href={waHref()} rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp {site.whatsapp.anzeige}</a></li>
+        <li><a href={mailHref}><Icon name="mail" size={20} /> {site.email}</a></li>
+        <li><span class="f-addr"><Icon name="map-pin" size={20} /> <span>{site.adresse.strasse}<br />{site.adresse.plz} {site.adresse.ort}</span></span></li>
+      </ul>
+      <p class="f-pay"><strong>Zahlung:</strong> {site.zahlungsarten.join(' · ')}</p>
+    </div>
+
+    <nav aria-label="Leistungen">
+      <h2 class="f-title">Leistungen</h2>
+      <ul class="f-links">
+        {data.leistungen.map((l) => <li><a href={`/leistungen/${l.slug}/`}>{l.titel}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav aria-label="Unternehmen und Rechtliches">
+      <h2 class="f-title">Insel Taxi</h2>
+      <ul class="f-links">
+        <li><a href="/flotte/">Flotte</a></li>
+        <li><a href="/tarife/">Tarife</a></li>
+        <li><a href="/ueber-uns/">Über uns</a></li>
+        <li><a href="/faq/">Häufige Fragen</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+        <li><a href="/impressum/">Impressum</a></li>
+        <li><a href="/datenschutz/">Datenschutz</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container site-footer__bottom">
+    <p>© {year} {site.firma}, Inhaber {site.inhaber}. Alle Rechte vorbehalten.</p>
+    <p>Diese Webseite setzt keine Cookies und verwendet kein Tracking.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--ink); color: #E9E9EC; margin-top: 0; }
+  .site-footer a { color: #fff; text-decoration-color: rgba(253,190,4,.7); }
+  .site-footer__grid { display: grid; gap: 2.5rem; padding-block: 3.5rem 2.5rem; }
+  @media (min-width: 768px) { .site-footer__grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .site-footer__grid { grid-template-columns: 1.4fr 1.2fr 1fr 1fr; gap: 3rem; } }
+  .f-brand { display: inline-flex; align-items: center; gap: .75rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.5rem; text-decoration: none; margin-bottom: 1rem; }
+  .f-brand img { width: 44px; height: 57px; }
+  .site-footer__brand p { color: #C9CAD1; max-width: 42ch; }
+  .f-247 { display: flex; align-items: center; gap: .6rem; color: #fff !important; font-weight: 600; }
+  .f-title { font-size: 1rem; text-transform: uppercase; letter-spacing: .1em; color: var(--yellow); margin-bottom: 1rem; }
+  .f-contact, .f-links { list-style: none; padding: 0; margin: 0; }
+  .f-contact li, .f-links li { margin: 0; }
+  .f-contact a, .f-addr { display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; text-decoration: none; }
+  .f-contact a:hover, .f-links a:hover { text-decoration: underline; }
+  .f-addr { align-items: flex-start; padding-top: .55rem; }
+  .f-addr .icon { margin-top: .2rem; }
+  .f-links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: #E9E9EC; }
+  .f-pay { margin-top: 1rem; color: #C9CAD1; font-size: 1rem; }
+  .f-pay strong { color: #fff; }
+  .site-footer__bottom { border-top: 1px solid #2E3038; padding-block: 1.5rem calc(1.5rem + var(--sticky-h)); display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between; font-size: .95rem; color: #B5B7BF; }
+  .site-footer__bottom p { margin: 0; }
+  @media (min-width: 900px) { .site-footer__bottom { padding-bottom: 6rem; } }
+</style>
