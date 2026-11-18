@@ -1,0 +1,138 @@
+---
+import Base from './Base.astro';
+import PageHero from '../components/PageHero.astro';
+import RequestForm from '../components/RequestForm.astro';
+import FaqList from '../components/FaqList.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.config.json';
+import data from '../data/leistungen.json';
+import faq from '../data/faq.json';
+import { telHref, serviceJsonLd, faqJsonLd, breadcrumbJsonLd } from '../lib/seo';
+
+interface Props {
+  slug: string;
+  seoTitle: string;
+  seoDescription: string;
+  h1: string;
+  lead: string;
+  eyebrow?: string;
+  facts: { icon: string; text: string }[];
+  ablauf: { t: string; d: string }[];
+  chips?: string[];
+  faqTags?: string[];
+  formTitle?: string;
+}
+const { slug, seoTitle, seoDescription, h1, lead, eyebrow, facts, ablauf, chips, faqTags, formTitle } = Astro.props;
+const l = data.leistungen.find((x) => x.slug === slug)!;
+const path = `/leistungen/${slug}/`;
+const tags = faqTags ?? [l.typ];
+const items = faq.fragen.filter((f) => f.tags.some((t) => tags.includes(t))).slice(0, 6);
+const others = data.leistungen.filter((x) => x.slug !== slug);
+const crumbs = [{ name: 'Leistungen', path: '/leistungen/' }, { name: l.titel, path }];
+---
+<Base
+  title={seoTitle}
+  description={seoDescription}
+  jsonld={[serviceJsonLd(l.titel, seoDescription, path), breadcrumbJsonLd([{ name: 'Start', path: '/' }, ...crumbs]), ...(items.length ? [faqJsonLd(items)] : [])]}
+>
+  <PageHero title={h1} lead={lead} eyebrow={eyebrow ?? l.titel} crumbs={crumbs} actions typ={l.typ} />
+
+  <section class="section">
+    <div class="container svc">
+      <div class="prose svc__main">
+        <slot />
+      </div>
+      <aside class="svc__aside" aria-label="Auf einen Blick">
+        <div class="card svc__facts">
+          <h2 class="svc__facts-title">Auf einen Blick</h2>
+          <ul>
+            {facts.map((f) => <li><span class="icon-tile icon-tile--soft"><Icon name={f.icon} size={22} /></span><span set:html={f.text} /></li>)}
+          </ul>
+          <a class="btn btn--call btn--block ring-pulse" href={telHref}><Icon name="phone" /> {site.telefon.anzeige}</a>
+          <a class="btn btn--wa btn--block" href="#anfrage"><Icon name="whatsapp" /> WhatsApp-Anfrage</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--mist" aria-labelledby="ablauf-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">So läuft es ab</p>
+        <h2 id="ablauf-titel">Schritt für Schritt</h2>
+      </div>
+      <ol class="timeline">
+        {ablauf.map((s, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <span class="timeline__n" aria-hidden="true">{i + 1}</span>
+            <div><h3>{s.t}</h3><p set:html={s.d} /></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {items.length > 0 && (
+    <section class="section" aria-labelledby="svc-faq">
+      <div class="container container-narrow">
+        <div class="section-head">
+          <p class="eyebrow">Häufige Fragen</p>
+          <h2 id="svc-faq">Fragen zu {l.titel.split(' & ')[0]}</h2>
+        </div>
+        <FaqList items={items} idPrefix={`${slug}-faq`} />
+      </div>
+    </section>
+  )}
+
+  <section class="section section--sand" aria-label="Anfrage">
+    <div class="container svc-form">
+      <div class="svc-form__text">
+        <p class="eyebrow">Jetzt anfragen</p>
+        <h2>Ihre Fahrt ist schon vorbereitet.</h2>
+        <p class="lead">Der Fahrttyp ist bereits ausgewählt. Ergänzen Sie Start, Ziel und Zeit, dann öffnet sich WhatsApp mit Ihrer fertigen Nachricht.</p>
+        <p>Lieber sprechen? Wir sind rund um die Uhr erreichbar:</p>
+        <a class="btn btn--call btn--lg ring-pulse" href={telHref} data-magnetic><Icon name="phone" /> {site.telefon.anzeige}</a>
+      </div>
+      <RequestForm id="anfrage" typ={l.typ} chips={chips} title={formTitle ?? `${l.kachel} anfragen`} />
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="weitere-titel">
+    <div class="container">
+      <h2 id="weitere-titel" class="weitere__title">Weitere Leistungen</h2>
+      <ul class="weitere">
+        {others.map((o) => (
+          <li><a href={`/leistungen/${o.slug}/`}><Icon name={o.icon} size={20} /> {o.titel}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .svc { display: grid; gap: 2.5rem; }
+  @media (min-width: 1024px) { .svc { grid-template-columns: minmax(0, 1fr) 360px; gap: 4rem; align-items: start; } .svc__aside { position: sticky; top: calc(var(--header-h) + 24px); } }
+  .svc__main :global(h2:first-child) { margin-top: 0; }
+  .svc__facts-title { font-size: 1.3rem; }
+  .svc__facts ul { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: .85rem; }
+  .svc__facts li { display: flex; gap: .85rem; align-items: center; margin: 0; font-weight: 600; line-height: 1.35; }
+  .svc__facts .icon-tile { width: 44px; height: 44px; border-radius: 12px; }
+  .svc__facts .btn + .btn { margin-top: .6rem; }
+
+  .timeline { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; counter-reset: none; }
+  @media (min-width: 900px) { .timeline { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; } }
+  .timeline li { margin: 0; display: flex; gap: 1rem; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+  @media (min-width: 900px) { .timeline li { flex-direction: column; } }
+  .timeline__n { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); display: grid; place-items: center; font: 800 1.2rem var(--font-heading); }
+  .timeline h3 { margin: .1rem 0 .35rem; font-size: 1.15rem; }
+  .timeline p { margin: 0; color: var(--ink-2); font-size: 1.02rem; }
+
+  .svc-form { display: grid; gap: 2rem; align-items: start; }
+  @media (min-width: 1024px) { .svc-form { grid-template-columns: .85fr 1fr; gap: 4rem; } .svc-form__text { position: sticky; top: calc(var(--header-h) + 32px); } }
+
+  .weitere__title { font-size: 1.4rem; }
+  .weitere { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+  .weitere li { margin: 0; }
+  .weitere a { display: inline-flex; align-items: center; gap: .5rem; min-height: 48px; padding: .5rem 1rem; border: 1.5px solid var(--line-strong); border-radius: 999px; text-decoration: none; font-weight: 600; transition: border-color .15s, background-color .15s; }
+  .weitere a:hover { border-color: var(--ink); background: var(--yellow-50); }
+</style>

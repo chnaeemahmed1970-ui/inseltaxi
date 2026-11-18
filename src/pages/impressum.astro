@@ -1,0 +1,80 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import site from '../data/site.config.json';
+import { telHref, mailHref, waHref } from '../lib/seo';
+const b = site.behoerde;
+const toc = [
+  { id: 'anbieter', t: 'Anbieter' },
+  { id: 'kontakt', t: 'Kontakt' },
+  { id: 'steuer', t: 'Umsatzsteuer' },
+  { id: 'aufsicht', t: 'Genehmigungs- und Aufsichtsbehörde' },
+  { id: 'beruf', t: 'Berufsbezeichnung' },
+  { id: 'verantwortlich', t: 'Verantwortlich für den Inhalt' },
+  { id: 'streit', t: 'Verbraucherstreitbeilegung' },
+  { id: 'haftung', t: 'Haftung für Inhalte und Links' },
+  { id: 'urheber', t: 'Urheberrecht und Bildnachweise' },
+];
+---
+<LegalLayout
+  title="Impressum | Insel Taxi Ratzeburg"
+  h1="Impressum"
+  description="Impressum von Insel Taxi, Inhaber Naeem Ahmed, Zittschower Weg 11a, 23909 Ratzeburg."
+  lead="Angaben nach § 5 Digitale-Dienste-Gesetz (DDG) und § 18 Medienstaatsvertrag (MStV)."
+  toc={toc}
+  path="/impressum/"
+  stand={site.rechtsStand}
+>
+  <h2 id="anbieter">Anbieter</h2>
+  <address>
+    <strong>{site.firma}</strong><br />
+    Inhaber: {site.inhaber}<br />
+    {site.adresse.strasse}<br />
+    {site.adresse.plz} {site.adresse.ort}<br />
+    {site.adresse.land}
+  </address>
+  <p>Rechtsform: {site.rechtsform}</p>
+
+  <h2 id="kontakt">Kontakt</h2>
+  <p>
+    Telefon: <a href={telHref}>{site.telefon.anzeige}</a><br />
+    E-Mail: <a href={mailHref}>{site.email}</a><br />
+    WhatsApp: <a href={waHref()} rel="noopener">{site.whatsapp.anzeige}</a>
+  </p>
+
+  <h2 id="steuer">Umsatzsteuer</h2>
+  <p>Umsatzsteuer-Identifikationsnummer nach § 27a Umsatzsteuergesetz: {site.ustId}</p>
+
+  <h2 id="aufsicht">Genehmigungs- und Aufsichtsbehörde</h2>
+  <p>Der Taxiverkehr ist nach dem Personenbeförderungsgesetz (PBefG) genehmigungspflichtig. Zuständige Genehmigungsbehörde:</p>
+  <address>
+    {b.name}<br />
+    {b.strasse}<br />
+    {b.plz} {b.ort}<br />
+    Telefon: {b.telefon}<br />
+    <a href={b.web} rel="noopener">{b.web.replace('https://', '')}</a>
+  </address>
+
+  <h2 id="beruf">Berufsbezeichnung</h2>
+  <p>{site.berufsbezeichnung}</p>
+
+  <h2 id="verantwortlich">Verantwortlich für den Inhalt</h2>
+  <p>Verantwortlich nach § 18 Abs. 2 MStV:</p>
+  <address>{site.inhaber}<br />{site.adresse.strasse}<br />{site.adresse.plz} {site.adresse.ort}</address>
+
+  <h2 id="streit">Verbraucherstreitbeilegung</h2>
+  <p>Wir sind nicht verpflichtet und nicht bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Haben Sie ein Anliegen, sprechen Sie uns bitte direkt an. Wir finden gemeinsam eine Lösung.</p>
+
+  <h2 id="haftung">Haftung für Inhalte und Links</h2>
+  <p>Wir erstellen die Inhalte dieser Webseite mit Sorgfalt und halten sie aktuell. Verbindlich für Fahrpreise ist allein die amtliche Tarifordnung des Kreises Herzogtum Lauenburg. Fällt Ihnen ein Fehler auf, freuen wir uns über einen Hinweis.</p>
+  <p>Diese Webseite enthält Links zu Angeboten Dritter. Für deren Inhalte sind ausschließlich die jeweiligen Anbieter verantwortlich. Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar. Werden uns solche bekannt, entfernen wir den Link umgehend.</p>
+
+  <h2 id="urheber">Urheberrecht und Bildnachweise</h2>
+  <p>Texte, Gestaltung, Logo und Grafiken dieser Webseite sind urheberrechtlich geschützt. Alle Rechte liegen bei {site.firma}, soweit nicht anders angegeben. Eine Verwendung außerhalb dieser Webseite ist nur mit unserer Zustimmung erlaubt.</p>
+  <ul>
+    <li>Logo, Illustrationen, Karten- und Fahrzeuggrafiken: {site.firma}</li>
+    <li>Symbole: <a href="https://lucide.dev" rel="noopener">Lucide</a> (ISC-Lizenz)</li>
+    <li>WhatsApp-Symbol: Marke der WhatsApp LLC, Darstellung über <a href="https://simpleicons.org" rel="noopener">Simple Icons</a> (CC0)</li>
+    <li>Schriften: Lexend und Source Sans 3 (SIL Open Font License), lokal eingebunden</li>
+    <li>Kartendaten bei Anzeige der Karte: © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap-Mitwirkende</a> (ODbL)</li>
+  </ul>
+</LegalLayout>

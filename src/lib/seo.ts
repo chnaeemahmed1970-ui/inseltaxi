@@ -28,7 +28,7 @@ export function businessJsonLd() {
       addressRegion: 'Schleswig-Holstein',
       addressCountry: site.adresse.landCode,
     },
-    geo: { '@type': 'GeoCoordinates', latitude: site.adresse.geo.lat, longitude: site.adresse.geo.lng },
+    ...(site.adresse.geo.lat ? { geo: { '@type': 'GeoCoordinates', latitude: site.adresse.geo.lat, longitude: site.adresse.geo.lng } } : {}),
     openingHoursSpecification: [{
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],

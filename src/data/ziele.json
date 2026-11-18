@@ -15,7 +15,7 @@
       "lng": 9.988,
       "art": "flughafen",
       "chip": true,
-      "label": "top"
+      "label": "left"
     },
     {
       "id": "hamburg",
@@ -25,7 +25,7 @@
       "lng": 9.993,
       "art": "stadt",
       "chip": true,
-      "label": "left",
+      "label": "bottom",
       "minor": true
     },
     {

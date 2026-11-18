@@ -11,7 +11,11 @@
     "ort": "Ratzeburg",
     "land": "Deutschland",
     "landCode": "DE",
-    "geo": { "lat": 53.6995, "lng": 10.7766 }
+    "geo": {
+      "lat": null,
+      "lng": null,
+      "_hinweis": "Exakte Koordinaten der Adresse eintragen (z. B. aus OpenStreetMap: Rechtsklick > Adresse anzeigen). Dann erscheinen Kartenmarker und Geo-Daten für Google."
+    }
   },
   "telefon": {
     "anzeige": "04541 802080",
@@ -27,10 +31,25 @@
   "ustId": "DE221613879",
   "ik": "600138210",
   "erreichbarkeit": "rund um die Uhr, 7 Tage die Woche",
-  "zahlungsarten": ["Bar", "EC-/Kartenzahlung", "PayPal", "Rechnung (Geschäftskunden)"],
+  "zahlungsarten": [
+    "Bar",
+    "EC-/Kartenzahlung",
+    "PayPal",
+    "Rechnung (Geschäftskunden)"
+  ],
   "fahrzeuge": [
-    { "id": "suv", "name": "SUV", "plaetze": 6, "kurz": "Komfortabel für bis zu 6 Personen" },
-    { "id": "grossraum", "name": "Großraumtaxi", "plaetze": 8, "kurz": "Viel Platz für bis zu 8 Personen" }
+    {
+      "id": "suv",
+      "name": "SUV",
+      "plaetze": 6,
+      "kurz": "Komfortabel für bis zu 6 Personen"
+    },
+    {
+      "id": "grossraum",
+      "name": "Großraumtaxi",
+      "plaetze": 8,
+      "kurz": "Viel Platz für bis zu 8 Personen"
+    }
   ],
   "googleProfilUrl": "",
   "behoerde": {
@@ -56,11 +75,6 @@
     "anschrift": "",
     "datenschutzUrl": "",
     "logDauerTage": 7
-  },
-  "dashcam": {
-    "_hinweis": "Speicherdauer und Tonaufzeichnung bitte bestätigen. Solange null, zeigt die Datenschutzerklärung einen gut sichtbaren Hinweis 'wird ergänzt'.",
-    "speicherdauer": null,
-    "tonaufnahme": null
   },
   "rechtsStand": "18.11.2026"
 }

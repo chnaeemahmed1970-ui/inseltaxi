@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://inseltaxi-ratzeburg.de/sitemap-index.xml

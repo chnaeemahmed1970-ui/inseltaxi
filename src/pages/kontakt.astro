@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import RequestForm from '../components/RequestForm.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.config.json';
+import { telHref, waHref, mailHref, addressLine, breadcrumbJsonLd } from '../lib/seo';
+
+const g = site.adresse.geo as { lat: number | null; lng: number | null };
+const lat = g.lat ?? 53.699, lng = g.lng ?? 10.757;
+const d = 0.012;
+const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - d * 1.7},${lat - d},${lng + d * 1.7},${lat + d}&layer=mapnik${g.lat ? `&marker=${lat},${lng}` : ''}`;
+const osmLink = `https://www.openstreetmap.org/search?query=${encodeURIComponent(addressLine)}`;
+---
+<Base
+  title="Kontakt – Taxi Ratzeburg rund um die Uhr: 04541 802080 | Insel Taxi"
+  description="Insel Taxi erreichen: Telefon 04541 802080 (24/7), WhatsApp 0173 9189239, E-Mail info@inseltaxi-ratzeburg.de. Zittschower Weg 11a, 23909 Ratzeburg."
+  jsonld={[breadcrumbJsonLd([{ name: 'Start', path: '/' }, { name: 'Kontakt', path: '/kontakt/' }])]}
+>
+  <PageHero
+    title="So erreichen Sie uns. Rund um die Uhr."
+    lead="Am schnellsten per Anruf oder WhatsApp. Für Anfragen ohne Eile schreiben Sie uns gern eine E-Mail."
+    eyebrow="Kontakt"
+    crumbs={[{ name: 'Kontakt', path: '/kontakt/' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="kanal">
+        <li class="kanal__item kanal__item--call" data-reveal>
+          <span class="icon-tile"><Icon name="phone" size={28} /></span>
+          <h2>Anrufen</h2>
+          <p>Der schnellste Weg zu Ihrem Taxi. 24 Stunden, 7 Tage.</p>
+          <a class="btn btn--call btn--lg btn--block ring-pulse" href={telHref} data-magnetic><Icon name="phone" /> {site.telefon.anzeige}</a>
+        </li>
+        <li class="kanal__item" data-reveal style="--i:1">
+          <span class="icon-tile"><Icon name="whatsapp" size={28} /></span>
+          <h2>WhatsApp</h2>
+          <p>Schreiben Sie uns, wir antworten schnell. Am besten mit unserem Formular.</p>
+          <a class="btn btn--wa btn--lg btn--block" href={waHref('Hallo Insel Taxi, ich habe eine Frage:')} rel="noopener"><Icon name="whatsapp" /> {site.whatsapp.anzeige}</a>
+        </li>
+        <li class="kanal__item" data-reveal style="--i:2">
+          <span class="icon-tile"><Icon name="mail" size={28} /></span>
+          <h2>E-Mail</h2>
+          <p>Für Anfragen mit Vorlauf, Geschäftskunden und Rechnungsfragen.</p>
+          <a class="btn btn--ghost btn--lg btn--block" href={mailHref}><Icon name="mail" /> E-Mail schreiben</a>
+          <p class="kanal__mail">{site.email}</p>
+        </li>
+      </ul>
+
+      <div class="save">
+        <span class="icon-tile icon-tile--soft"><Icon name="contact" size={26} /></span>
+        <div>
+          <h2>Nummer gleich speichern</h2>
+          <p>Laden Sie unsere Kontaktkarte herunter. Dann haben Sie Insel Taxi immer im Telefonbuch, auch für Ihre Eltern oder Großeltern.</p>
+        </div>
+        <a class="btn btn--ghost" href="/insel-taxi.vcf" download="Insel-Taxi.vcf"><Icon name="download" /> Kontakt speichern</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand" aria-label="E-Mail-Anfrage">
+    <div class="container kontakt-form">
+      <div>
+        <p class="eyebrow">Anfrage per E-Mail</p>
+        <h2>Lieber schriftlich?</h2>
+        <p class="lead">Füllen Sie die wenigen Felder aus. Ihr E-Mail-Programm öffnet sich mit der fertigen Nachricht an uns. Auf dieser Webseite wird nichts gespeichert.</p>
+        <address class="kontakt-adr">
+          <strong>{site.firma}</strong><br />
+          Inhaber {site.inhaber}<br />
+          {site.adresse.strasse}<br />
+          {site.adresse.plz} {site.adresse.ort}
+        </address>
+      </div>
+      <RequestForm id="mailanfrage" mode="mail" title="E-Mail-Anfrage" />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="karte-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Anschrift</p>
+        <h2 id="karte-titel">Hier sind wir zu Hause</h2>
+        <p>{addressLine}</p>
+      </div>
+      <div class="osm" data-osm={osmSrc} data-osm-title="Karte: Insel Taxi in Ratzeburg (OpenStreetMap)">
+        <div class="osm__placeholder" data-osm-placeholder>
+          <Icon name="map" size={40} />
+          <p><strong>Karte laden?</strong></p>
+          <p>Die Karte wird von OpenStreetMap geladen. Dabei wird Ihre IP-Adresse an die OpenStreetMap Foundation übertragen. Erst mit Klick auf den Button wird die Verbindung hergestellt. <a href="/datenschutz/#karte">Mehr dazu</a></p>
+          <button type="button" class="btn" data-osm-load><Icon name="map-pin" /> Karte anzeigen</button>
+          <p class="osm__alt"><a href={osmLink} rel="noopener">Adresse direkt in OpenStreetMap öffnen</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kanal { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  @media (min-width: 900px) { .kanal { grid-template-columns: repeat(3, 1fr); } }
+  .kanal__item { margin: 0; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 1.75rem; display: flex; flex-direction: column; gap: .5rem; box-shadow: var(--shadow-sm); }
+  .kanal__item--call { background: var(--yellow-50); border-color: var(--yellow); }
+  .kanal__item h2 { font-size: 1.5rem; margin: .75rem 0 0; }
+  .kanal__item p { color: var(--ink-2); margin: 0 0 .75rem; flex: 1; }
+  .kanal__item .btn { margin-top: auto; }
+  .kanal__mail { font-size: .98rem; text-align: center; flex: 0 !important; margin: .5rem 0 0 !important; word-break: break-all; }
+  .save { margin-top: 2rem; display: grid; gap: 1rem; align-items: center; border: 1.5px dashed var(--line-strong); border-radius: var(--radius-lg); padding: 1.5rem; }
+  @media (min-width: 768px) { .save { grid-template-columns: auto 1fr auto; gap: 1.5rem; } }
+  .save h2 { font-size: 1.3rem; margin-bottom: .25rem; }
+  .save p { margin: 0; color: var(--ink-2); }
+  .kontakt-form { display: grid; gap: 2rem; align-items: start; }
+  @media (min-width: 1024px) { .kontakt-form { grid-template-columns: .85fr 1fr; gap: 4rem; } }
+  .kontakt-adr { font-style: normal; margin-top: 1.5rem; padding: 1.25rem; border-left: 5px solid var(--yellow); background: var(--paper); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+  .osm { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 9; min-height: 360px; background: var(--mist); }
+  .osm :global(iframe) { width: 100%; height: 100%; border: 0; display: block; }
+  .osm__placeholder { height: 100%; display: grid; place-content: center; justify-items: center; text-align: center; gap: .5rem; padding: 1.5rem; max-width: 560px; margin: 0 auto; }
+  .osm__placeholder p { margin: 0; color: var(--ink-2); font-size: 1rem; }
+  .osm__placeholder .btn { margin-top: .75rem; }
+  .osm__alt { margin-top: .5rem !important; }
+</style>

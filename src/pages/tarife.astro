@@ -1,0 +1,176 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import t from '../data/tarife.json';
+import { breadcrumbJsonLd } from '../lib/seo';
+const tag = t.tarifstufen.filter((s) => s.zeit === 'tag');
+const nacht = t.tarifstufen.filter((s) => s.zeit === 'nacht');
+const regeln = [
+  { titel: 'Fahrpreisberechnung', text: t.fortschaltung },
+  { titel: 'Anfahrt', text: t.anfahrt },
+  { titel: 'Tarif A (Anfahrt außerhalb)', text: t.tarifA },
+  { titel: 'Gepäck', text: `${t.gepaeck} ${t.gepaeckEinschraenkung}` },
+  { titel: 'Sonderausstattung', text: t.sonderausstattung },
+  { titel: 'Nicht genutzte Bestellung', text: t.zurueckweisung },
+  { titel: 'Bezahlung', text: `${t.zahlung} ${t.vorauszahlung}` },
+];
+---
+<Base
+  title="Taxi-Tarife Kreis Herzogtum Lauenburg ab 01.10.2026 | Insel Taxi Ratzeburg"
+  description="Aktuelle Taxipreise im Kreis Herzogtum Lauenburg: Grundpreis 5,50 €, Kilometerpreise Tag und Nacht, Wartezeit, Großraumtaxi-Zuschlag. Amtliche Tarifordnung gültig ab 01.10.2026."
+  jsonld={[breadcrumbJsonLd([{ name: 'Start', path: '/' }, { name: 'Tarife', path: '/tarife/' }])]}
+>
+  <PageHero
+    title="Unsere Tarife: transparent und amtlich festgelegt."
+    lead="Innerhalb des Kreises Herzogtum Lauenburg gelten feste Taxipreise, die der Kreis festlegt. Hier sehen Sie alle Werte, genau so, wie sie in der Tarifordnung stehen."
+    eyebrow="Tarife"
+    crumbs={[{ name: 'Tarife', path: '/tarife/' }]}
+  >
+    <p class="tarif-stand"><Icon name="calendar" size={20} /> Gültig ab <strong>{t.gueltigAb}</strong> · {t.titel} vom {t.verordnungVom}</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="tarif-now" data-tarif-now hidden>
+        <div class="clock" aria-hidden="true">
+          <div class="clock__face"></div>
+          <div class="clock__hand" data-clock-hand></div>
+          <span class="clock__l clock__l--0">0</span><span class="clock__l clock__l--6">6</span><span class="clock__l clock__l--12">12</span><span class="clock__l clock__l--18">18</span>
+        </div>
+        <div>
+          <p class="tarif-now__label"><span class="live-dot" aria-hidden="true"></span> Live-Hinweis</p>
+          <p class="tarif-now__text" data-tn-text aria-live="polite"></p>
+          <p class="muted tarif-now__small">Gelb im Kreis: werktags 6 bis 22 Uhr (Tagtarif). Dunkel: Nacht. Sonn- und Feiertage gelten ganztägig als Nachttarif.</p>
+        </div>
+      </div>
+
+      <div class="tarif-grid">
+        <article class="tcard tcard--hero" data-reveal>
+          <p class="tcard__kicker">{t.grundpreis.label}</p>
+          <p class="tcard__value">{t.grundpreis.wert}</p>
+          <p class="tcard__text">{t.grundpreis.text}</p>
+        </article>
+
+        <article class="tcard" data-reveal style="--i:1" data-tarif-zeit="tag">
+          <p class="tcard__kicker"><Icon name="sun" size={20} /> Kilometerpreis Tag</p>
+          <p class="tcard__intro">{t.kilometerIntro}</p>
+          <dl class="tcard__rows">
+            {tag.map((s) => (<div><dt><span class="code">{s.code}</span> {s.label}</dt><dd>{s.wert}</dd></div>))}
+          </dl>
+          <span class="tcard__now">Gilt jetzt</span>
+        </article>
+
+        <article class="tcard tcard--dark" data-reveal style="--i:2" data-tarif-zeit="nacht">
+          <p class="tcard__kicker"><Icon name="moon" size={20} /> Kilometerpreis Nacht, Sonn- & Feiertag</p>
+          <p class="tcard__intro">{t.kilometerIntro}</p>
+          <dl class="tcard__rows">
+            {nacht.map((s) => (<div><dt><span class="code">{s.code}</span> {s.label}</dt><dd>{s.wert}</dd></div>))}
+          </dl>
+          <span class="tcard__now">Gilt jetzt</span>
+        </article>
+
+        <article class="tcard" data-reveal style="--i:3">
+          <p class="tcard__kicker"><Icon name="timer" size={20} /> {t.wartezeit.label}</p>
+          <p class="tcard__value tcard__value--md">{t.wartezeit.wert}</p>
+          <p class="tcard__text">{t.wartezeit.text}</p>
+        </article>
+
+        <article class="tcard" data-reveal style="--i:4">
+          <p class="tcard__kicker"><Icon name="users" size={20} /> {t.grossraum.label}</p>
+          <p class="tcard__value tcard__value--md">{t.grossraum.wert}</p>
+          <p class="tcard__text">{t.grossraum.text}</p>
+        </article>
+
+        <article class="tcard" data-reveal style="--i:5">
+          <p class="tcard__kicker"><Icon name="luggage" size={20} /> Gepäck</p>
+          <p class="tcard__value tcard__value--md">kostenlos</p>
+          <p class="tcard__text">{t.gepaeck}</p>
+        </article>
+      </div>
+
+      <div class="tarif-info">
+        <div class="note">
+          <p><strong>Festpreise im Kreisgebiet.</strong> {t.festpreisHinweis}</p>
+        </div>
+        <div class="note note--water">
+          <p><strong>Fahrten mit Ziel außerhalb des Kreises.</strong> {t.ausserhalbHinweis}</p>
+          <p>Für Fernfahrten und Flughafentransfers nennen wir Ihnen deshalb gern vorab einen Preis. <a href="/#anfrage">Fahrt anfragen</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist" aria-labelledby="regeln-titel">
+    <div class="container container-narrow">
+      <div class="section-head">
+        <p class="eyebrow">Gut zu wissen</p>
+        <h2 id="regeln-titel">Weitere Regelungen der Tarifordnung</h2>
+        <p>Wörtlich aus der Kreisverordnung übernommen.</p>
+      </div>
+      <dl class="regeln">
+        {regeln.map((r) => (<div><dt>{r.titel}</dt><dd>{r.text}</dd></div>))}
+      </dl>
+      <p class="tarif-pdf">
+        <a class="btn btn--ghost" href={t.pdf} download><Icon name="file-text" /> Tarifordnung als PDF herunterladen</a>
+      </p>
+      <p class="muted">Herausgeber: {t.herausgeber}. Maßgeblich ist allein der amtliche Wortlaut der Verordnung. Ein Preisrechner wird bewusst nicht angeboten, weil der tatsächliche Fahrpreis vom Taxameter ermittelt wird.</p>
+    </div>
+  </section>
+
+  <CtaBand title="Preis für Ihre Strecke?" text="Fragen Sie uns mit Start und Ziel an. Für Ziele außerhalb des Kreises nennen wir Ihnen vorab einen Preis." />
+</Base>
+
+<style>
+  .tarif-stand { display: inline-flex; align-items: center; gap: .5rem; flex-wrap: wrap; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: .5rem 1rem; font-size: 1rem; margin: .5rem 0 0; }
+  .tarif-now { display: flex; gap: 1.5rem; align-items: center; background: var(--ink); color: #fff; border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+  .tarif-now[hidden] { display: none; }
+  .tarif-now__label { display: flex; align-items: center; gap: .5rem; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; font-weight: 700; color: var(--yellow); margin: 0 0 .25rem; }
+  .tarif-now__text { font-family: var(--font-heading); font-weight: 600; font-size: clamp(1.05rem, 1rem + .4vw, 1.3rem); margin: 0 0 .35rem; }
+  .tarif-now__small { color: #C9CAD1 !important; font-size: .95rem; margin: 0; }
+  .clock { position: relative; width: 92px; height: 92px; flex: none; }
+  .clock__face { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(#3A3D46 0 90deg, var(--yellow) 90deg 330deg, #3A3D46 330deg 360deg); }
+  .clock__face::after { content: ''; position: absolute; inset: 14px; border-radius: 50%; background: var(--ink); }
+  .clock__hand { position: absolute; left: 50%; top: 8px; width: 4px; height: 38px; margin-left: -2px; background: #fff; border-radius: 2px; transform-origin: 50% 38px; }
+  .clock__l { position: absolute; font: 700 .7rem/1 var(--font-heading); color: #fff; }
+  .clock__l--0 { top: 18px; left: 50%; transform: translateX(-50%); } .clock__l--12 { bottom: 18px; left: 50%; transform: translateX(-50%); }
+  .clock__l--6 { right: 19px; top: 50%; transform: translateY(-50%); } .clock__l--18 { left: 17px; top: 50%; transform: translateY(-50%); }
+  @media (max-width: 480px) { .tarif-now { flex-direction: column; align-items: flex-start; } }
+
+  .tarif-grid { display: grid; gap: 1.25rem; }
+  @media (min-width: 768px) { .tarif-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .tarif-grid { grid-template-columns: repeat(3, 1fr); } }
+  .tcard { position: relative; border: 2px solid var(--line); border-radius: var(--radius-lg); padding: 1.5rem; background: var(--paper); transition: border-color .3s, box-shadow .3s; }
+  .tcard--hero { background: var(--yellow); border-color: var(--yellow); }
+  .tcard--dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .tcard__kicker { display: flex; align-items: center; gap: .5rem; font-family: var(--font-heading); font-weight: 700; font-size: 1.05rem; margin-bottom: .5rem; }
+  .tcard__value { font: 800 clamp(3rem, 2.4rem + 3vw, 4.5rem)/1 var(--font-heading); letter-spacing: -0.03em; margin: .25rem 0 .75rem; }
+  .tcard__value--md { font-size: clamp(2.2rem, 1.9rem + 1.5vw, 3rem); }
+  .tcard__text, .tcard__intro { font-size: 1rem; margin: 0; }
+  .tcard:not(.tcard--hero):not(.tcard--dark) .tcard__text, .tcard:not(.tcard--dark) .tcard__intro { color: var(--ink-2); }
+  .tcard--hero .tcard__text { color: var(--ink); }
+  .tcard--dark .tcard__intro { color: #C9CAD1; }
+  .tcard__rows { margin: 1rem 0 0; display: grid; gap: .75rem; }
+  .tcard__rows div { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline; border-top: 1px dashed var(--line-strong); padding-top: .75rem; }
+  .tcard--dark .tcard__rows div { border-color: #3A3D46; }
+  .tcard__rows dt { font-size: 1rem; line-height: 1.4; }
+  .tcard__rows dd { margin: 0; font: 800 1.6rem/1 var(--font-heading); white-space: nowrap; }
+  .tcard--dark .tcard__rows dd { color: var(--yellow); }
+  .code { display: inline-block; font: 700 .8rem/1 var(--font-heading); padding: .25rem .4rem; border-radius: 6px; background: var(--yellow-100); color: var(--ink); margin-right: .25rem; }
+  .tcard--dark .code { background: #3A3D46; color: var(--yellow); }
+  .tcard__now { display: none; position: absolute; top: -12px; right: 16px; background: #12A150; color: #fff; font-weight: 700; font-size: .85rem; padding: .25rem .65rem; border-radius: 999px; }
+  .tcard.is-now { border-color: #12A150; box-shadow: 0 0 0 4px rgba(18,161,80,.18); }
+  .tcard.is-now .tcard__now { display: inline-block; }
+  @media (min-width: 1100px) { .tcard--hero { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; } }
+
+  .tarif-info { display: grid; gap: 1rem; margin-top: 2rem; }
+  @media (min-width: 900px) { .tarif-info { grid-template-columns: 1fr 1fr; } }
+
+  .regeln { margin: 0; display: grid; gap: 0; }
+  .regeln div { padding: 1.1rem 0; border-bottom: 1px solid var(--line-strong); display: grid; gap: .3rem; }
+  @media (min-width: 768px) { .regeln div { grid-template-columns: 220px 1fr; gap: 1.5rem; } }
+  .regeln dt { font-family: var(--font-heading); font-weight: 700; }
+  .regeln dd { margin: 0; color: var(--ink-2); }
+  .tarif-pdf { margin: 2rem 0 1rem; }
+</style>

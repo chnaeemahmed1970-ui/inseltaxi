@@ -45,7 +45,8 @@ export function initTarifNow() {
   const el = document.querySelector<HTMLElement>('[data-tarif-now]');
   if (!el) return;
   const render = () => {
-    const now = new Date();
+    // Deutsche Zeit, auch wenn jemand aus dem Ausland die Seite aufruft
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }));
     const t = currentTariff(now);
     const time = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
     el.querySelector('[data-tn-text]')!.textContent =
@@ -53,6 +54,8 @@ export function initTarifNow() {
         ? `Jetzt (${time} Uhr) gilt der Tagtarif T1/T2, weil ${t.grund}.`
         : `Jetzt (${time} Uhr) gilt der Nacht-, Sonn- und Feiertagstarif T1N/T2N, weil ${t.grund}.`;
     el.dataset.stufe = t.stufe;
+    const hand = el.querySelector<HTMLElement>('[data-clock-hand]');
+    if (hand) hand.style.transform = `rotate(${((now.getHours() + now.getMinutes() / 60) / 24) * 360}deg)`;
     el.hidden = false;
     document.querySelectorAll<HTMLElement>('[data-tarif-zeit]').forEach((row) => {
       row.classList.toggle('is-now', row.dataset.tarifZeit === t.stufe);

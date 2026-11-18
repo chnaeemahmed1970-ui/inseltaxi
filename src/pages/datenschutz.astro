@@ -1,0 +1,167 @@
+---
+// HINWEIS: Sorgfältig erstellter Entwurf. Vor dem Livegang bitte rechtlich prüfen lassen (siehe README).
+// Besonders prüfen: Abschnitt Krankenfahrten (Art. 9 DSGVO, § 302 SGB V).
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.config.json';
+import { telHref, mailHref } from '../lib/seo';
+const h = site.hosting;
+const a = site.datenschutzAufsicht;
+const toc = [
+  { id: 'kurz', t: 'Das Wichtigste in Kürze' },
+  { id: 'verantwortlicher', t: '1. Verantwortlicher' },
+  { id: 'hosting', t: '2. Hosting und Server-Logfiles' },
+  { id: 'cookies', t: '3. Keine Cookies, kein Tracking, keine Fremdschriften' },
+  { id: 'karte', t: '4. Karte (OpenStreetMap) per Zwei-Klick' },
+  { id: 'kontakt', t: '5. Kontakt per Telefon und E-Mail' },
+  { id: 'whatsapp', t: '6. Anfrage per WhatsApp' },
+  { id: 'buchung', t: '7. Fahrtbuchung und Auftragsabwicklung' },
+  { id: 'kranken', t: '8. Krankenfahrten und Gesundheitsdaten' },
+  { id: 'geschaeft', t: '9. Geschäftskunden und Rechnungen' },
+  { id: 'empfaenger', t: '10. Empfänger und Auftragsverarbeiter' },
+  { id: 'dauer', t: '11. Speicherdauer' },
+  { id: 'rechte', t: '12. Ihre Rechte' },
+  { id: 'beschwerde', t: '13. Beschwerderecht' },
+  { id: 'sicherheit', t: '14. Datensicherheit' },
+  { id: 'links', t: '15. Externe Links' },
+  { id: 'aktualitaet', t: '16. Aktualität dieser Erklärung' },
+];
+---
+<LegalLayout
+  title="Datenschutzerklärung | Insel Taxi Ratzeburg"
+  h1="Datenschutzerklärung"
+  description="Datenschutz bei Insel Taxi: keine Cookies, kein Tracking, keine Fremdschriften. Informationen zu Anfragen per WhatsApp und E-Mail, Krankenfahrten und Ihren Rechten."
+  lead="Wir gehen mit Ihren Daten so sorgsam um wie mit unseren Fahrgästen. Hier erklären wir verständlich, welche Daten wir wann und wofür verarbeiten."
+  toc={toc}
+  path="/datenschutz/"
+  stand={site.rechtsStand}
+>
+  <div class="kurz" id="kurz">
+    <h2>Das Wichtigste in Kürze</h2>
+    <ul class="kurz__list">
+      <li><Icon name="cookie" size={22} /><span><strong>Keine Cookies, kein Tracking.</strong> Wir setzen keine Cookies und nutzen keine Analyse- oder Werbedienste. Deshalb gibt es auch kein Cookie-Banner.</span></li>
+      <li><Icon name="type" size={22} /><span><strong>Keine Fremdschriften, keine externen Inhalte.</strong> Schriften und alle Dateien liegen auf unserem eigenen Server. Beim Seitenaufruf wird kein anderer Anbieter kontaktiert.</span></li>
+      <li><Icon name="message-circle" size={22} /><span><strong>Daten nur bei Ihrer Anfrage.</strong> Das Anfrageformular speichert nichts. Es öffnet WhatsApp oder Ihr E-Mail-Programm. Erst wenn Sie dort auf Senden tippen, erreichen uns Ihre Angaben.</span></li>
+      <li><Icon name="map" size={22} /><span><strong>Karte nur auf Klick.</strong> Die Karte auf der Kontaktseite lädt erst, wenn Sie das ausdrücklich möchten.</span></li>
+    </ul>
+  </div>
+
+  <h2 id="verantwortlicher">1. Verantwortlicher</h2>
+  <p>Verantwortlich für die Datenverarbeitung im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:</p>
+  <address>
+    {site.firma}, Inhaber {site.inhaber}<br />
+    {site.adresse.strasse}, {site.adresse.plz} {site.adresse.ort}<br />
+    Telefon: <a href={telHref}>{site.telefon.anzeige}</a><br />
+    E-Mail: <a href={mailHref}>{site.email}</a>
+  </address>
+  <p>Ein Datenschutzbeauftragter ist für unseren Betrieb gesetzlich nicht vorgeschrieben. Bei allen Fragen zum Datenschutz wenden Sie sich bitte direkt an uns.</p>
+
+  <h2 id="hosting">2. Hosting und Server-Logfiles</h2>
+  {h.name ? (
+    <p>Unsere Webseite wird bei folgendem Anbieter gehostet: <strong>{h.name}</strong>{h.anschrift && `, ${h.anschrift}`}. {h.datenschutzUrl && <>Datenschutzhinweise des Anbieters: <a href={h.datenschutzUrl} rel="noopener">{h.datenschutzUrl}</a>.</>} Die Server stehen in der Europäischen Union.</p>
+  ) : (
+    <div class="note note--todo"><p><strong>Wird vor Veröffentlichung ergänzt:</strong> Name und Anschrift des Hosting-Anbieters (Server in der EU).</p></div>
+  )}
+  <p>Mit dem Anbieter haben wir einen Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO geschlossen. Er verarbeitet Daten nur nach unserer Weisung.</p>
+  <p>Wenn Sie unsere Webseite aufrufen, speichert der Server automatisch Informationen, die Ihr Browser übermittelt (Server-Logfiles):</p>
+  <ul>
+    <li>IP-Adresse des anfragenden Geräts</li>
+    <li>Datum und Uhrzeit des Zugriffs</li>
+    <li>aufgerufene Seite oder Datei</li>
+    <li>zuvor besuchte Seite (Referrer), soweit übermittelt</li>
+    <li>Browsertyp und Betriebssystem (User-Agent)</li>
+    <li>HTTP-Statuscode und übertragene Datenmenge</li>
+  </ul>
+  <p><strong>Zweck:</strong> Auslieferung der Webseite, Stabilität und Sicherheit, etwa die Abwehr von Angriffen. <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt im sicheren und funktionsfähigen Betrieb der Webseite. <strong>Speicherdauer:</strong> Die Logfiles werden nach spätestens {h.logDauerTage} Tagen gelöscht, sofern sie nicht zur Aufklärung eines konkreten Sicherheitsvorfalls benötigt werden. Eine Zusammenführung mit anderen Daten findet nicht statt.</p>
+
+  <h2 id="cookies">3. Keine Cookies, kein Tracking, keine Fremdschriften</h2>
+  <p>Diese Webseite setzt <strong>keine Cookies</strong> und legt auch sonst keine Informationen auf Ihrem Gerät ab. Wir verwenden <strong>keine Analyse-, Statistik- oder Werbedienste</strong> und keine Social-Media-Plugins. Schriftarten, Symbole und Skripte sind <strong>lokal auf unserem Server</strong> gespeichert. Es wird keine Verbindung zu Google Fonts, Content-Delivery-Netzwerken oder anderen Drittanbietern aufgebaut.</p>
+  <p>Da wir nicht auf Informationen in Ihrem Endgerät zugreifen, ist keine Einwilligung nach § 25 Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz (TDDDG) nötig. Ein Cookie-Banner gibt es deshalb nicht.</p>
+
+  <h2 id="karte">4. Karte (OpenStreetMap) per Zwei-Klick</h2>
+  <p>Auf unserer Kontaktseite können Sie eine Karte anzeigen lassen. Sie wird <strong>erst geladen, wenn Sie auf „Karte anzeigen“ klicken</strong>. Vorher besteht keine Verbindung zum Kartenanbieter.</p>
+  <p>Nach Ihrem Klick werden die Kartendaten von der OpenStreetMap Foundation (OSMF), St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich, geladen. Dabei werden insbesondere Ihre IP-Adresse und Angaben zu Ihrem Browser an die OSMF übertragen. Für das Vereinigte Königreich besteht ein Angemessenheitsbeschluss der EU-Kommission. <strong>Rechtsgrundlage</strong> ist Ihre Einwilligung durch den Klick (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Sie können sie jederzeit widerrufen, indem Sie die Seite neu laden. Weitere Informationen: <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">Datenschutzerklärung der OSMF</a>.</p>
+
+  <h2 id="kontakt">5. Kontakt per Telefon und E-Mail</h2>
+  <p>Wenn Sie uns anrufen oder eine E-Mail schreiben, verarbeiten wir die Angaben, die Sie uns mitteilen, etwa Name, Telefonnummer, E-Mail-Adresse und Ihr Anliegen. Wir nutzen diese Daten, um Ihre Anfrage zu beantworten und Ihre Fahrt zu planen.</p>
+  <p><strong>E-Mail-Anfrage über unser Formular:</strong> Das Formular auf der Kontaktseite und der Link „Lieber per E-Mail anfragen?“ übertragen keine Daten an unseren Server. Sie bauen lediglich eine E-Mail zusammen und öffnen damit Ihr eigenes E-Mail-Programm. Erst wenn Sie dort auf Senden klicken, wird die E-Mail über Ihren E-Mail-Anbieter an uns geschickt.</p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO, wenn Ihre Anfrage auf eine Fahrt oder einen Vertrag zielt, sonst Art. 6 Abs. 1 lit. f DSGVO (unser berechtigtes Interesse, Anfragen zu beantworten). <strong>Speicherdauer:</strong> Wir löschen Anfragen, sobald sie erledigt sind, es sei denn, gesetzliche Aufbewahrungspflichten bestehen (siehe <a href="#dauer">Speicherdauer</a>).</p>
+
+  <h2 id="whatsapp">6. Anfrage per WhatsApp</h2>
+  <p><strong>So funktioniert unser Formular:</strong> Wenn Sie das Anfrageformular ausfüllen und auf „Per WhatsApp anfragen“ tippen, setzt Ihr Browser aus Ihren Angaben eine Textnachricht zusammen und öffnet einen Link zu WhatsApp (wa.me). Auf unserer Webseite wird dabei <strong>nichts gespeichert und nichts an uns übertragen</strong>. In WhatsApp sehen Sie die vorbereitete Nachricht und können sie ändern. <strong>Erst wenn Sie dort auf Senden tippen</strong>, erreicht uns Ihre Nachricht.</p>
+  <p>Beim Öffnen des Links und beim Versand ist WhatsApp beteiligt. Anbieter für Nutzer in Europa ist die WhatsApp Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland. WhatsApp ist für die Verarbeitung in seinem Dienst <strong>eigenständig verantwortlich</strong>. Nachrichteninhalte sind Ende-zu-Ende-verschlüsselt. WhatsApp verarbeitet aber Metadaten, etwa Telefonnummer, Zeitpunkt und Geräteinformationen, und kann Daten an die Konzernmutter Meta Platforms, Inc. in den USA übermitteln. Meta ist nach dem EU-US Data Privacy Framework zertifiziert, für das ein Angemessenheitsbeschluss der EU-Kommission besteht. Einzelheiten: <a href="https://www.whatsapp.com/legal/privacy-policy-eea" rel="noopener">Datenschutzrichtlinie von WhatsApp</a>.</p>
+  <p>Wir nutzen die Nachrichten, die Sie uns per WhatsApp senden, nur zur Bearbeitung Ihrer Anfrage und zur Durchführung Ihrer Fahrt. <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Anbahnung und Durchführung des Beförderungsvertrags), für allgemeine Fragen Art. 6 Abs. 1 lit. f DSGVO. Möchten Sie WhatsApp nicht nutzen, erreichen Sie uns jederzeit per Telefon oder E-Mail. Bitte senden Sie uns über WhatsApp möglichst keine ausführlichen Gesundheitsangaben. Für Krankenfahrten genügt zunächst die Art der Fahrt.</p>
+
+  <h2 id="buchung">7. Fahrtbuchung und Auftragsabwicklung</h2>
+  <p>Für die Durchführung einer Fahrt verarbeiten wir Ihren Namen, Ihre Telefonnummer, Abhol- und Zielort, Datum und Uhrzeit, die Anzahl der Personen und besondere Wünsche (etwa Gepäck, Kindersitz, Rollator). Bei Zahlung per Karte, PayPal oder Rechnung kommen die dafür nötigen Zahlungs- und Rechnungsdaten hinzu.</p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertrag) und Art. 6 Abs. 1 lit. c DSGVO (gesetzliche Pflichten, etwa nach Handels- und Steuerrecht sowie Personenbeförderungsrecht).</p>
+
+  <h2 id="kranken">8. Krankenfahrten und Gesundheitsdaten</h2>
+  <p>Bei Krankenfahrten erfahren wir zwangsläufig Gesundheitsdaten im Sinne von Art. 9 DSGVO, zum Beispiel, dass Sie regelmäßig zur Dialyse fahren, sowie Angaben aus der ärztlichen Verordnung und Genehmigung. Wir verarbeiten nur, was für die Fahrt und die Abrechnung nötig ist, und behandeln diese Daten vertraulich.</p>
+  <ul>
+    <li><strong>Welche Daten:</strong> Name, Anschrift, Geburtsdatum, Krankenkasse und Versichertennummer, Angaben aus Verordnung und Genehmigung, Fahrtdaten (Datum, Strecke), Zuzahlung bzw. Befreiung, Hinweise zur Mobilität (z. B. Rollator).</li>
+    <li><strong>Zweck:</strong> Durchführung der Krankenfahrt und <strong>Direktabrechnung mit Ihrer Krankenkasse</strong>.</li>
+    <li><strong>Rechtsgrundlagen:</strong> Art. 6 Abs. 1 lit. b und lit. c DSGVO in Verbindung mit Art. 9 Abs. 2 lit. h DSGVO und § 22 Abs. 1 Nr. 1 lit. b Bundesdatenschutzgesetz (BDSG) für die Versorgung und Behandlung im Gesundheitsbereich. Die Übermittlung der Abrechnungsdaten an Ihre Krankenkasse erfolgt auf Grundlage von § 302 Sozialgesetzbuch V (SGB V) in Verbindung mit Art. 6 Abs. 1 lit. c und Art. 9 Abs. 2 lit. h DSGVO.</li>
+    <li><strong>Empfänger:</strong> Ihre Krankenkasse und, soweit wir eines beauftragen, ein Abrechnungsdienstleister, der als Auftragsverarbeiter nach Art. 28 DSGVO für uns tätig ist.</li>
+    <li><strong>Speicherdauer:</strong> Abrechnungsunterlagen bewahren wir für die gesetzlichen Fristen auf (siehe <a href="#dauer">Speicherdauer</a>).</li>
+  </ul>
+
+  <h2 id="geschaeft">9. Geschäftskunden und Rechnungen</h2>
+  <p>Für Fahrten auf Rechnung verarbeiten wir Firmendaten sowie Namen und Kontaktdaten der Ansprechpersonen und der Fahrgäste, die Fahrtdaten und die Rechnungsdaten. <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO gegenüber unserem Vertragspartner, Art. 6 Abs. 1 lit. f DSGVO für Daten von Mitarbeitenden und Gästen des Unternehmens (unser Interesse an einer reibungslosen Abwicklung) und Art. 6 Abs. 1 lit. c DSGVO für die steuerlichen Aufbewahrungspflichten.</p>
+
+  <h2 id="empfaenger">10. Empfänger und Auftragsverarbeiter</h2>
+  <p>Wir geben Ihre Daten nur weiter, wenn es für die genannten Zwecke nötig ist oder eine gesetzliche Pflicht besteht. Empfänger können sein:</p>
+  <ul>
+    <li><strong>Hosting-Anbieter</strong> unserer Webseite (Auftragsverarbeiter, Server in der EU)</li>
+    <li><strong>Anbieter unseres E-Mail-Postfachs</strong> (Auftragsverarbeiter)</li>
+    <li><strong>Steuerberatung</strong> für Buchhaltung und Steuererklärungen (gesetzlich zur Verschwiegenheit verpflichtet)</li>
+    <li><strong>Zahlungsdienstleister:</strong> bei PayPal die PayPal (Europe) S.à r.l. et Cie, S.C.A., 22-24 Boulevard Royal, L-2449 Luxemburg; bei Kartenzahlung der Betreiber unseres Kartenterminals und die beteiligten Banken. Diese handeln jeweils in eigener Verantwortung.</li>
+    <li><strong>Krankenkassen</strong> und gegebenenfalls ein Abrechnungsdienstleister bei Krankenfahrten</li>
+    <li><strong>Behörden</strong>, soweit wir gesetzlich dazu verpflichtet sind</li>
+  </ul>
+  <p>Eine Übermittlung in Länder außerhalb der EU findet durch uns nicht statt. Zu WhatsApp siehe <a href="#whatsapp">Abschnitt 6</a>.</p>
+
+  <h2 id="dauer">11. Speicherdauer</h2>
+  <p>Wir speichern personenbezogene Daten nur so lange, wie es für den jeweiligen Zweck nötig ist. Danach löschen wir sie, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Nach § 257 Handelsgesetzbuch und § 147 Abgabenordnung bewahren wir insbesondere auf:</p>
+  <ul>
+    <li><strong>Buchungsbelege und Rechnungen:</strong> 8 Jahre</li>
+    <li><strong>Handels- und Geschäftsbriefe:</strong> 6 Jahre</li>
+    <li><strong>Bücher und Jahresabschlüsse:</strong> 10 Jahre</li>
+  </ul>
+  <p>Die Fristen beginnen mit dem Ende des Kalenderjahres, in dem die Unterlage entstanden ist. Reine Anfragen ohne Fahrt löschen wir, sobald sie erledigt sind.</p>
+
+  <h2 id="rechte">12. Ihre Rechte</h2>
+  <p>Sie haben uns gegenüber folgende Rechte. Wenden Sie sich dafür einfach formlos an uns.</p>
+  <ul>
+    <li><strong>Auskunft</strong> über die bei uns gespeicherten Daten (Art. 15 DSGVO)</li>
+    <li><strong>Berichtigung</strong> unrichtiger Daten (Art. 16 DSGVO)</li>
+    <li><strong>Löschung</strong> Ihrer Daten (Art. 17 DSGVO)</li>
+    <li><strong>Einschränkung</strong> der Verarbeitung (Art. 18 DSGVO)</li>
+    <li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
+    <li><strong>Widerruf</strong> einer Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO)</li>
+  </ul>
+  <div class="note note--water">
+    <p><strong>Widerspruchsrecht nach Art. 21 DSGVO:</strong> Verarbeiten wir Ihre Daten auf Grundlage unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO), können Sie aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit widersprechen. Wir verarbeiten die Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen, die Ihre Interessen überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.</p>
+  </div>
+
+  <h2 id="beschwerde">13. Beschwerderecht</h2>
+  <p>Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO). Für uns zuständig ist:</p>
+  <address>{a.name}<br />{a.strasse}, {a.plz} {a.ort}<br />Telefon: {a.telefon}<br /><a href={a.web} rel="noopener">{a.web.replace('https://', '')}</a></address>
+
+  <h2 id="sicherheit">14. Datensicherheit</h2>
+  <p>Unsere Webseite wird ausschließlich verschlüsselt über HTTPS (TLS) ausgeliefert. Sie erkennen das am Schloss-Symbol in Ihrem Browser. Zusätzlich schützen wir die Seite mit modernen Sicherheitseinstellungen, die zum Beispiel das Nachladen fremder Inhalte verhindern. Im Betrieb treffen wir angemessene technische und organisatorische Maßnahmen, um Ihre Daten vor Verlust und unbefugtem Zugriff zu schützen.</p>
+
+  <h2 id="links">15. Externe Links</h2>
+  <p>Unsere Webseite enthält Links zu anderen Anbietern, etwa zu WhatsApp, zu OpenStreetMap oder zu Behörden. Diese Seiten werden erst geöffnet, wenn Sie auf den Link klicken. Für die Datenverarbeitung dort ist der jeweilige Anbieter verantwortlich.</p>
+
+  <h2 id="aktualitaet">16. Aktualität dieser Erklärung</h2>
+  <p>Wir passen diese Datenschutzerklärung an, wenn sich unsere Webseite, unsere Abläufe oder die Rechtslage ändern. Es gilt die jeweils hier veröffentlichte Fassung.</p>
+</LegalLayout>
+
+<style>
+  .kurz { background: var(--yellow-50); border: 2px solid var(--yellow); border-radius: var(--radius-lg); padding: 1.5rem 1.5rem .75rem; margin-bottom: 2.5rem; }
+  .kurz h2 { margin-top: 0 !important; border: 0 !important; padding-top: 0 !important; }
+  .kurz__list { list-style: none; padding: 0; margin: 0; }
+  .kurz__list li { display: flex; gap: .85rem; align-items: flex-start; margin: 0 0 1rem; }
+  .kurz__list :global(.icon) { flex: none; margin-top: .2rem; background: var(--yellow); border-radius: 8px; padding: 4px; width: 30px; height: 30px; }
+</style>

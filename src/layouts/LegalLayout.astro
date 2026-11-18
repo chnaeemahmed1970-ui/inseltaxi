@@ -1,0 +1,37 @@
+---
+import Base from './Base.astro';
+import PageHero from '../components/PageHero.astro';
+interface Props { title: string; h1: string; description: string; lead: string; toc: { id: string; t: string }[]; path: string; stand: string }
+const { title, h1, description, lead, toc, path, stand } = Astro.props;
+---
+<Base title={title} description={description}>
+  <PageHero title={h1} lead={lead} eyebrow="Rechtliches" crumbs={[{ name: h1, path }]} />
+  <section class="section">
+    <div class="container legal">
+      <nav class="legal__toc" aria-labelledby="toc-titel">
+        <p class="legal__toc-title" id="toc-titel">Inhalt</p>
+        <ul>
+          {toc.map((it) => <li><a href={`#${it.id}`}>{it.t}</a></li>)}
+        </ul>
+      </nav>
+      <div class="prose legal__body">
+        <slot />
+        <p class="legal__stand">Stand: {stand}</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal { display: grid; gap: 2.5rem; }
+  @media (min-width: 1024px) { .legal { grid-template-columns: 280px minmax(0, 1fr); gap: 4rem; align-items: start; } .legal__toc { position: sticky; top: calc(var(--header-h) + 24px); max-height: calc(100vh - var(--header-h) - 48px); overflow: auto; } }
+  .legal__toc { background: var(--mist); border-radius: var(--radius); padding: 1.25rem 1.25rem 1rem; font-size: 1rem; }
+  .legal__toc-title { font-family: var(--font-heading); font-weight: 700; margin-bottom: .5rem; }
+  .legal__toc ul { margin: 0; padding: 0; list-style: none; }
+  .legal__toc li { margin: 0; }
+  .legal__toc a { display: inline-block; padding: .3rem 0; text-decoration: none; color: var(--ink-2); line-height: 1.35; }
+  .legal__toc a:hover { color: var(--ink); text-decoration: underline; }
+  .legal__body :global(h2) { padding-top: .5rem; border-top: 1px solid var(--line); }
+  .legal__body :global(h2:first-child) { border-top: 0; padding-top: 0; }
+  .legal__stand { margin-top: 3rem; color: var(--ink-3); }
+</style>

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import TaxiCar from '../components/TaxiCar.astro';
+import site from '../data/site.config.json';
+import { telHref } from '../lib/seo';
+---
+<Base title="Seite nicht gefunden | Insel Taxi" description="Diese Seite gibt es leider nicht. Zurück zur Startseite von Insel Taxi aus Ratzeburg oder direkt anrufen." noindex>
+  <section class="section nf">
+    <div class="container container-narrow">
+      <div class="nf__car" aria-hidden="true"><TaxiCar width={150} /></div>
+      <p class="eyebrow">Fehler 404</p>
+      <h1>Hier sind wir falsch abgebogen.</h1>
+      <p class="lead">Diese Seite gibt es leider nicht. Kein Problem, wir bringen Sie zurück auf die Strecke.</p>
+      <div class="nf__actions">
+        <a class="btn btn--lg" href="/"><Icon name="house" /> Zur Startseite</a>
+        <a class="btn btn--call btn--lg" href={telHref}><Icon name="phone" /> {site.telefon.anzeige}</a>
+      </div>
+      <ul class="chips nf__links">
+        <li><a class="chip" href="/leistungen/">Leistungen</a></li>
+        <li><a class="chip" href="/tarife/">Tarife</a></li>
+        <li><a class="chip" href="/faq/">FAQ</a></li>
+        <li><a class="chip" href="/kontakt/">Kontakt</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { text-align: center; }
+  .nf .eyebrow { justify-content: center; }
+  .nf .lead { margin-inline: auto; }
+  .nf__car { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    .nf__car :global(svg) { animation: wobble 2.4s ease-in-out infinite; }
+    @keyframes wobble { 0%, 100% { transform: translateX(-12px) rotate(-1deg); } 50% { transform: translateX(12px) rotate(1deg); } }
+  }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin: 2rem 0; }
+  .nf__links { justify-content: center; }
+</style>

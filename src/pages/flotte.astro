@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import FleetPicker from '../components/FleetPicker.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbJsonLd } from '../lib/seo';
+const features = [
+  { icon: 'baby', t: 'Kindersitzerhöhungen', d: 'In unseren Fahrzeugen integriert. Für Babys und Kleinkinder sprechen Sie uns bitte vorher an.' },
+  { icon: 'luggage', t: 'Gepäck und Rollator', d: 'Nach Tarifordnung kostenlos, soweit Platz und Sicherheit es zulassen.' },
+  { icon: 'credit-card', t: 'Bargeldlos bezahlen', d: 'EC- und Kreditkarte, PayPal oder Rechnung. Bar natürlich auch.' },
+];
+---
+<Base
+  title="Unsere Flotte – SUV bis 6 und Großraumtaxi bis 8 Plätze | Insel Taxi Ratzeburg"
+  description="Die Fahrzeuge von Insel Taxi: SUV mit bis zu 6 Plätzen und Großraumtaxi mit bis zu 8 Plätzen. Mit Kindersitzerhöhungen und viel Platz für Gepäck."
+  jsonld={[breadcrumbJsonLd([{ name: 'Start', path: '/' }, { name: 'Flotte', path: '/flotte/' }])]}
+>
+  <PageHero
+    title="Unsere Flotte: Platz für alle, die mitwollen."
+    lead="Zwei Fahrzeugtypen für jeden Bedarf: der SUV für bis zu 6 Personen und das Großraumtaxi für bis zu 8."
+    eyebrow="Flotte"
+    crumbs={[{ name: 'Flotte', path: '/flotte/' }]}
+  />
+  <section class="section">
+    <div class="container">
+      <FleetPicker />
+    </div>
+  </section>
+  <section class="section section--mist" aria-labelledby="ausstattung-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Ausstattung</p>
+        <h2 id="ausstattung-titel">In allen Fahrzeugen</h2>
+      </div>
+      <ul class="grid grid--3 feat">
+        {features.map((f, i) => (
+          <li class="card" data-reveal style={`--i:${i}`}>
+            <span class="icon-tile"><Icon name={f.icon} size={26} /></span>
+            <h3>{f.t}</h3>
+            <p>{f.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <CtaBand title="Welches Fahrzeug darf es sein?" text="Sagen Sie uns, wie viele Personen mitfahren und wie viel Gepäck Sie haben. Wir planen das passende Fahrzeug ein." />
+</Base>
+
+<style>
+  .feat { list-style: none; padding: 0; margin: 0; }
+  .feat li { margin: 0; }
+  .feat h3 { margin: 1rem 0 .4rem; }
+  .feat p { margin: 0; color: var(--ink-2); font-size: 1.02rem; }
+</style>

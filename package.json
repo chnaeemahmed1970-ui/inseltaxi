@@ -7,9 +7,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/postbuild.mjs",
     "preview": "astro preview",
-    "check:links": "node scripts/check-dist.mjs"
+    "assets": "node scripts/generate-assets.mjs",
+    "check": "node scripts/check-dist.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.5",

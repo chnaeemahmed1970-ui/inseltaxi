@@ -1,0 +1,49 @@
+---
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import site from '../../data/site.config.json';
+---
+<ServiceLayout
+  slug="krankenfahrten"
+  seoTitle="Krankenfahrten Ratzeburg – Dialyse, Chemo, Reha, Direktabrechnung | Insel Taxi"
+  seoDescription="Krankenfahrten und Serienfahrten ab Ratzeburg: Dialyse, Chemotherapie, Bestrahlung, Reha, Therapie. Direktabrechnung mit Ihrer Krankenkasse (IK 600138210). Rollator-Mitnahme. 24/7 erreichbar."
+  h1="Krankenfahrten mit Ruhe, Rücksicht und Direktabrechnung."
+  lead="Zur Dialyse, Chemotherapie, Bestrahlung, Reha oder Therapie: Wir fahren Sie zuverlässig zu festen Zeiten und rechnen direkt mit Ihrer Krankenkasse ab."
+  eyebrow="Krankenfahrten & Serienfahrten"
+  facts={[
+    { icon: 'receipt', text: `Direktabrechnung mit Krankenkassen, IK ${site.ik}` },
+    { icon: 'repeat', text: 'Serienfahrten zu festen Zeiten' },
+    { icon: 'heart-handshake', text: 'Fahrer, die Rücksicht nehmen' },
+    { icon: 'accessibility', text: 'Rollator-Mitnahme kostenlos' },
+    { icon: 'clock', text: 'Rund um die Uhr erreichbar' },
+  ]}
+  ablauf={[
+    { t: 'Verordnung holen', d: 'Ihre Ärztin oder Ihr Arzt stellt eine Verordnung einer Krankenbeförderung aus.' },
+    { t: 'Genehmigung klären', d: 'Für viele ambulante Fahrten muss die Krankenkasse vorher zustimmen. Wir sagen Ihnen gern, worauf es ankommt.' },
+    { t: 'Termine abstimmen', d: 'Nennen Sie uns Ihre Termine. Bei Serienfahrten planen wir alle Fahrten fest ein.' },
+    { t: 'Fahren und abrechnen', d: 'Wir holen Sie ab und rechnen direkt mit Ihrer Krankenkasse ab. Sie zahlen nur die gesetzliche Zuzahlung, falls Sie nicht befreit sind.' },
+  ]}
+  faqTags={['krankenfahrt']}
+  formTitle="Krankenfahrt anfragen"
+>
+  <h2>Wenn jede Fahrt zählt</h2>
+  <p>Wer regelmäßig zur Behandlung muss, braucht vor allem eines: Verlässlichkeit. Bei Insel Taxi wissen Sie, wann wir kommen. Wir sind pünktlich, fahren ruhig und nehmen uns die Zeit, die Sie brauchen. Angehörige können sich darauf verlassen, dass Sie gut ankommen.</p>
+
+  <h3>Für diese Fahrten sind wir für Sie da</h3>
+  <ul class="check-list">
+    <li><strong>Dialyse</strong>, oft mehrmals pro Woche zu festen Zeiten</li>
+    <li><strong>Chemotherapie</strong> und <strong>Strahlentherapie</strong></li>
+    <li><strong>Reha</strong>, ambulant und zur Anreise in die Klinik</li>
+    <li><strong>Therapien und Arzttermine</strong>, auch Fachärzte in Hamburg, Lübeck oder weiter weg</li>
+    <li><strong>Entlassung aus dem Krankenhaus</strong>, wir holen Sie ab</li>
+  </ul>
+
+  <h2>Direktabrechnung mit Ihrer Krankenkasse</h2>
+  <div class="note">
+    <p><strong>Wir rechnen direkt mit den Krankenkassen ab.</strong> Unser Institutionskennzeichen (IK) lautet <strong>{site.ik}</strong>. Sie müssen nicht in Vorleistung gehen und keine Belege einreichen.</p>
+  </div>
+  <p>Damit Ihre Krankenkasse die Kosten übernimmt, brauchen Sie in der Regel eine <strong>ärztliche Verordnung</strong> einer Krankenbeförderung. Für viele ambulante Fahrten, etwa zur Dialyse, Chemo- oder Strahlentherapie, ist zusätzlich eine <strong>Genehmigung der Krankenkasse</strong> vor der ersten Fahrt nötig. Was in Ihrem Fall gilt, entscheidet Ihre Krankenkasse. Unsicher? Rufen Sie uns an, wir erklären Ihnen gern die nächsten Schritte.</p>
+  <p>Die gesetzliche Zuzahlung tragen Sie wie üblich selbst, es sei denn, Sie sind davon befreit.</p>
+
+  <h2>Rollator, Rollstuhl und Begleitung</h2>
+  <p>Ihren <strong>Rollator nehmen wir selbstverständlich mit</strong>, ohne Aufpreis. Sind Sie auf einen Rollstuhl angewiesen, <strong>sprechen Sie uns bitte vorher an</strong>, damit wir gemeinsam klären, wie Ihre Fahrt am besten möglich ist. Eine Begleitperson kann gern mitfahren, sagen Sie uns dies bitte bei der Anfrage.</p>
+</ServiceLayout>

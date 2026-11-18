@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import data from '../../data/leistungen.json';
+import { breadcrumbJsonLd } from '../../lib/seo';
+---
+<Base
+  title="Leistungen – Taxi, Flughafen, Krankenfahrten, Fernfahrten | Insel Taxi Ratzeburg"
+  description="Alle Leistungen von Insel Taxi aus Ratzeburg: Alltagsfahrten, Flughafentransfer, Krankenfahrten mit Direktabrechnung, Geschäftsfahrten, Kinder- und Kurierfahrten, Fernfahrten, Großraumtaxi."
+  jsonld={[breadcrumbJsonLd([{ name: 'Start', path: '/' }, { name: 'Leistungen', path: '/leistungen/' }])]}
+>
+  <PageHero
+    title="Was wir für Sie fahren"
+    lead="Vom kurzen Weg zum Arzt bis zur Fernfahrt ins Ausland: Wählen Sie Ihre Fahrt und erfahren Sie, wie es abläuft."
+    eyebrow="Leistungen"
+    crumbs={[{ name: 'Leistungen', path: '/leistungen/' }]}
+    actions
+  />
+  <section class="section">
+    <div class="container">
+      <ul class="lgrid">
+        {data.leistungen.map((l, i) => (
+          <li class="card card--link lcard" data-reveal style={`--i:${i % 3}`}>
+            <span class="icon-tile"><Icon name={l.icon} size={28} /></span>
+            <div>
+              <h2><a href={`/leistungen/${l.slug}/`}>{l.titel}</a></h2>
+              <p>{l.kurz}</p>
+              <span class="lcard__more" aria-hidden="true">Mehr erfahren <Icon name="arrow-right" size={18} /></span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+
+<style>
+  .lgrid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem; }
+  @media (min-width: 768px) { .lgrid { grid-template-columns: 1fr 1fr; } }
+  .lcard { margin: 0; display: flex; gap: 1.25rem; align-items: flex-start; }
+  .lcard h2 { font-size: 1.35rem; margin-bottom: .35rem; }
+  .lcard h2 a { text-decoration: none; }
+  .lcard p { color: var(--ink-2); margin-bottom: .5rem; }
+  .lcard__more { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; }
+</style>

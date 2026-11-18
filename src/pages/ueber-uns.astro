@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.config.json';
+import { breadcrumbJsonLd } from '../lib/seo';
+const werte = [
+  { icon: 'clock', t: 'Verlässlich', d: 'Wenn wir eine Zeit zusagen, sind wir da. Rund um die Uhr, auch an Sonn- und Feiertagen.' },
+  { icon: 'heart-handshake', t: 'Rücksichtsvoll', d: 'Ob Kind, Patientin oder Geschäftsgast: Wir fahren ruhig und nehmen uns Zeit.' },
+  { icon: 'sparkles', t: 'Gepflegt', d: 'Saubere Fahrzeuge, ein freundlicher Ton und klare Absprachen.' },
+  { icon: 'route', t: 'Unterwegs ohne Grenzen', d: 'Von der Inselstadt Ratzeburg aus fahren wir deutschlandweit und ins Ausland.' },
+];
+---
+<Base
+  title="Über uns – Insel Taxi aus der Inselstadt Ratzeburg"
+  description="Insel Taxi ist Ihr Taxiunternehmen aus der Inselstadt Ratzeburg. Inhaber Naeem Ahmed. Verlässlich, rücksichtsvoll und rund um die Uhr für Sie unterwegs, deutschlandweit und ins Ausland."
+  jsonld={[breadcrumbJsonLd([{ name: 'Start', path: '/' }, { name: 'Über uns', path: '/ueber-uns/' }])]}
+>
+  <PageHero
+    title="Insel Taxi aus der Inselstadt Ratzeburg"
+    lead="Ratzeburg liegt auf einer Insel, umgeben von Seen. Hier sind wir zu Hause. Und von hier aus fahren wir Sie überall hin."
+    eyebrow="Über uns"
+    crumbs={[{ name: 'Über uns', path: '/ueber-uns/' }]}
+  />
+  <section class="section">
+    <div class="container about">
+      <div class="prose">
+        <h2>Ein Taxiunternehmen, auf das man sich verlassen kann</h2>
+        <p>Hinter Insel Taxi steht {site.inhaber}. Unsere Idee ist einfach: Wer ein Taxi bestellt, soll sich um nichts mehr kümmern müssen. Pünktlich sein, freundlich sein, sicher fahren und klar sagen, was eine Fahrt kostet. Das klingt selbstverständlich, und genau so soll es sich bei uns anfühlen.</p>
+        <p>Wir fahren Menschen zum Arzt und zur Dialyse, Familien zum Flughafen, Kinder zur Schule, Geschäftsleute zu Terminen und Gruppen zu Ausflügen. Manche Fahrten dauern fünf Minuten, andere führen quer durch Deutschland oder über die Grenze. Jede ist uns gleich wichtig.</p>
+        <h2>Warum „Insel“ Taxi?</h2>
+        <p>Die Altstadt von Ratzeburg liegt auf einer Insel im Ratzeburger See, verbunden mit dem Festland über Dämme. Darum heißt Ratzeburg Inselstadt, und darum heißen wir Insel Taxi. Unser Logo zeigt eine Straße, die sich vom Taxischild aus in die Weite schlängelt: Ratzeburg ist unser Zuhause, nicht unsere Grenze.</p>
+      </div>
+      <figure class="about__logo">
+        <img src="/img/logo.svg" alt="Logo von Insel Taxi: gelber Standort-Pin mit Taxischild und einer geschwungenen Straße" width="260" height="335" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+  <section class="section section--mist" aria-labelledby="werte-titel">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Unsere Haltung</p>
+        <h2 id="werte-titel">Wofür wir stehen</h2>
+      </div>
+      <ul class="grid grid--4 werte">
+        {werte.map((w, i) => (
+          <li class="card" data-reveal style={`--i:${i}`}>
+            <span class="icon-tile"><Icon name={w.icon} size={26} /></span>
+            <h3>{w.t}</h3>
+            <p>{w.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+
+<style>
+  .about { display: grid; gap: 2.5rem; align-items: center; }
+  @media (min-width: 1024px) { .about { grid-template-columns: 1fr 360px; gap: 5rem; } }
+  .about__logo { margin: 0; justify-self: center; padding: 2.5rem; background: var(--yellow-50); border-radius: 50%; aspect-ratio: 1; display: grid; place-items: center; width: min(360px, 80vw); }
+  .about__logo img { width: 62%; height: auto; }
+  .werte { list-style: none; padding: 0; margin: 0; }
+  .werte li { margin: 0; }
+  .werte h3 { margin: 1rem 0 .4rem; }
+  .werte p { margin: 0; color: var(--ink-2); font-size: 1.02rem; }
+</style>

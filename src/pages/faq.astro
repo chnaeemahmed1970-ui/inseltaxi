@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import faq from '../data/faq.json';
+import { faqJsonLd, breadcrumbJsonLd } from '../lib/seo';
+---
+<Base
+  title="Häufige Fragen (FAQ) – Bestellung, Preise, Krankenfahrten | Insel Taxi Ratzeburg"
+  description="Antworten auf häufige Fragen: Vorbestellung, Fernfahrten, Zahlungsarten, Gepäck, Kindersitze, Krankenfahrten mit Direktabrechnung und Datenschutz bei Anfragen."
+  jsonld={[faqJsonLd(faq.fragen), breadcrumbJsonLd([{ name: 'Start', path: '/' }, { name: 'FAQ', path: '/faq/' }])]}
+>
+  <PageHero
+    title="Häufige Fragen"
+    lead="Hier finden Sie Antworten auf die Fragen, die uns am häufigsten gestellt werden. Ihre Frage ist nicht dabei? Rufen Sie uns an, wir helfen gern."
+    eyebrow="FAQ"
+    crumbs={[{ name: 'FAQ', path: '/faq/' }]}
+  >
+    <nav class="faq-nav" aria-label="Themen">
+      <ul class="chips">
+        {faq.kategorien.map((k) => <li><a class="chip" href={`#${k.id}`}>{k.titel}</a></li>)}
+      </ul>
+    </nav>
+  </PageHero>
+  <section class="section">
+    <div class="container container-narrow">
+      {faq.kategorien.map((k) => (
+        <div class="faq-cat" id={k.id}>
+          <h2>{k.titel}</h2>
+          <FaqList items={faq.fragen.filter((f) => f.kat === k.id)} idPrefix={k.id} />
+        </div>
+      ))}
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+
+<style>
+  .faq-nav { margin-top: 1.5rem; }
+  .faq-cat + .faq-cat { margin-top: 3.5rem; }
+  .faq-cat h2 { font-size: clamp(1.4rem, 1.2rem + 1vw, 1.9rem); }
+</style>

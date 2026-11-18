@@ -1,0 +1,15 @@
+{
+  "name": "Insel Taxi Ratzeburg",
+  "short_name": "Insel Taxi",
+  "description": "Taxi aus Ratzeburg, rund um die Uhr. Flughafentransfer, Krankenfahrten, Fernfahrten.",
+  "lang": "de",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FDBE04",
+  "icons": [
+    { "src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/img/logo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

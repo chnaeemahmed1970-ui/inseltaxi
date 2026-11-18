@@ -155,6 +155,7 @@ const pct = (v: number, t: number) => `${((v / t) * 100).toFixed(2)}%`;
   .rmap__pin--left .rmap__label { right: calc(100% + 2px); }
   .rmap__pin--right .rmap__label { left: calc(100% + 2px); }
   .rmap__pin--top .rmap__label { top: auto; bottom: calc(100% + 2px); left: 50%; transform: translateX(-50%); }
+  .rmap__pin--bottom .rmap__label { top: calc(100% + 2px); left: 50%; transform: translateX(-50%); }
   .rmap__pin--none .rmap__label { display: none; }
   .rmap__pin:hover .rmap__dot, .rmap__pin:focus-visible .rmap__dot, .rmap__pin.is-active .rmap__dot { transform: scale(1.35); background: var(--yellow); }
   .rmap__pin:hover .rmap__label, .rmap__pin:focus-visible .rmap__label, .rmap__pin.is-active .rmap__label { background: var(--yellow); }

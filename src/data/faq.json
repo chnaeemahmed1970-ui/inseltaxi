@@ -1,29 +1,170 @@
 {
   "_hinweis": "Antworten dürfen einfaches HTML (<a>, <strong>) enthalten. 'tags' steuert, auf welchen Leistungsseiten eine Frage erscheint. 'start: true' = auf der Startseite.",
   "kategorien": [
-    { "id": "buchung", "titel": "Bestellen & Ablauf" },
-    { "id": "preise", "titel": "Preise & Bezahlen" },
-    { "id": "fahrzeuge", "titel": "Fahrzeuge, Gepäck & Kinder" },
-    { "id": "kranken", "titel": "Krankenfahrten" },
-    { "id": "sicherheit", "titel": "Sicherheit & Datenschutz" }
+    {
+      "id": "buchung",
+      "titel": "Bestellen & Ablauf"
+    },
+    {
+      "id": "preise",
+      "titel": "Preise & Bezahlen"
+    },
+    {
+      "id": "fahrzeuge",
+      "titel": "Fahrzeuge, Gepäck & Kinder"
+    },
+    {
+      "id": "kranken",
+      "titel": "Krankenfahrten"
+    },
+    {
+      "id": "sicherheit",
+      "titel": "Datenschutz"
+    }
   ],
   "fragen": [
-    { "kat": "buchung", "start": true, "tags": ["alltag", "flughafen", "fernfahrt"], "q": "Muss ich ein Taxi vorbestellen?", "a": "Nein. Sie erreichen uns rund um die Uhr, auch nachts, an Sonn- und Feiertagen. Für feste Termine wie Flughafen, Bahn, Arzttermin oder sehr frühe Abfahrten empfehlen wir aber, möglichst frühzeitig zu bestellen. Dann planen wir Ihre Fahrt fest ein." },
-    { "kat": "buchung", "start": true, "tags": [], "q": "Wie kann ich eine Fahrt bestellen?", "a": "Am schnellsten per Anruf unter der 04541 802080. Oder Sie füllen unser kurzes Anfrageformular aus: Es öffnet WhatsApp mit Ihrer fertigen Nachricht. Per E-Mail an info@inseltaxi-ratzeburg.de geht es natürlich auch. Sie erhalten von uns eine Bestätigung." },
-    { "kat": "buchung", "start": true, "tags": ["fernfahrt", "flughafen"], "q": "Fahren Sie auch weite Strecken oder ins Ausland?", "a": "Ja. Ratzeburg ist unser Zuhause, nicht unsere Grenze. Wir fahren Sie deutschlandweit und auch ins Ausland, zum Beispiel nach Hamburg, Berlin, Hannover, an die Ostsee, nach Sylt oder zu jedem Flughafen." },
-    { "kat": "buchung", "tags": ["flughafen"], "q": "Holen Sie mich auch am Flughafen ab?", "a": "Ja. Teilen Sie uns Flughafen, Flugnummer und geplante Ankunftszeit mit. Auf Wunsch erwarten wir Sie mit einem Namensschild in der Ankunftshalle. Ändert sich Ihre Ankunft, melden Sie sich einfach telefonisch oder per WhatsApp bei uns." },
-    { "kat": "preise", "start": true, "tags": ["fernfahrt", "flughafen", "geschaeft"], "q": "Was kostet eine Fernfahrt oder ein Flughafentransfer?", "a": "Für Fahrten innerhalb des Kreises Herzogtum Lauenburg gilt der amtliche Taxitarif (siehe <a href=\"/tarife/\">Tarife</a>). Liegt Ihr Ziel außerhalb, kann der Preis für die gesamte Strecke vor Fahrtbeginn frei vereinbart werden. Fragen Sie uns einfach mit Start und Ziel an, wir nennen Ihnen vorab einen Preis." },
-    { "kat": "preise", "start": true, "tags": ["geschaeft", "alltag"], "q": "Wie kann ich bezahlen?", "a": "Bar, mit EC- oder Kreditkarte, mit PayPal oder für Geschäftskunden bequem auf Rechnung. Auf Wunsch erhalten Sie selbstverständlich eine Quittung." },
-    { "kat": "preise", "tags": ["geschaeft"], "q": "Kann meine Firma auf Rechnung fahren?", "a": "Ja. Für Geschäftskunden fahren wir auf Rechnung, auf Wunsch gesammelt als Monatsrechnung. Sprechen Sie uns an, dann richten wir das für Ihr Unternehmen ein." },
-    { "kat": "fahrzeuge", "tags": ["gruppe", "flughafen", "fernfahrt"], "q": "Wie viele Personen passen in ein Taxi?", "a": "Unser SUV bietet bis zu 6 Plätze, unser Großraumtaxi bis zu 8. Für größere Gruppen koordinieren wir mehrere Fahrzeuge." },
-    { "kat": "fahrzeuge", "start": true, "tags": ["flughafen", "fernfahrt", "bahnhof"], "q": "Kostet Gepäck extra?", "a": "Nein. Nach der amtlichen Tarifordnung wird Gepäck unentgeltlich befördert, also Handgepäck, Reisekoffer und Rollatoren, soweit Platz und Verkehrssicherheit es zulassen. Haben Sie besonders viel oder sperriges Gepäck, sagen Sie es uns bitte bei der Anfrage." },
-    { "kat": "fahrzeuge", "tags": ["kinder", "flughafen"], "q": "Gibt es Kindersitze?", "a": "Unsere Fahrzeuge haben integrierte Kindersitzerhöhungen. Fahren Babys oder Kleinkinder mit, die eine Babyschale oder einen eigenen Kindersitz brauchen, sprechen Sie uns bitte vorher an." },
-    { "kat": "fahrzeuge", "tags": ["kinder"], "q": "Fahren Sie Kinder auch ohne Begleitung?", "a": "Ja, Kinderfahrten gehören zu unseren Leistungen, zum Beispiel zur Schule, zum Sport oder zu den Großeltern. Wir sprechen vorher genau ab, wer das Kind übergibt und wer es in Empfang nimmt. Bei der Abholung geben wir den Eltern auf Wunsch kurz Bescheid." },
-    { "kat": "kranken", "start": true, "tags": ["krankenfahrt"], "q": "Rechnen Sie Krankenfahrten direkt mit der Krankenkasse ab?", "a": "Ja. Wir rechnen direkt mit den Krankenkassen ab (Institutionskennzeichen 600138210). Sie brauchen dafür in der Regel eine ärztliche Verordnung und, je nach Fall, eine Genehmigung Ihrer Krankenkasse. Die gesetzliche Zuzahlung zahlen Sie wie üblich selbst, sofern Sie nicht befreit sind." },
-    { "kat": "kranken", "tags": ["krankenfahrt"], "q": "Was brauche ich für eine Krankenfahrt?", "a": "In der Regel eine ärztliche Verordnung einer Krankenbeförderung. Für viele ambulante Fahrten, etwa zur Dialyse, Chemo- oder Strahlentherapie, muss Ihre Krankenkasse die Fahrt vorher genehmigen. Unsicher, was in Ihrem Fall gilt? Rufen Sie uns an, wir helfen Ihnen gern weiter. Verbindlich entscheidet Ihre Krankenkasse." },
-    { "kat": "kranken", "tags": ["krankenfahrt"], "q": "Kann ich meinen Rollator oder Rollstuhl mitnehmen?", "a": "Einen Rollator nehmen wir selbstverständlich mit, kostenlos. Wenn Sie im Rollstuhl unterwegs sind, sprechen Sie uns bitte vorher an, damit wir gemeinsam klären, wie Ihre Fahrt am besten möglich ist." },
-    { "kat": "kranken", "tags": ["krankenfahrt"], "q": "Übernehmen Sie regelmäßige Fahrten, etwa zur Dialyse?", "a": "Ja. Serienfahrten zu Dialyse, Chemotherapie, Bestrahlung, Reha oder Therapie planen wir zu festen Zeiten ein. So wissen Sie immer, wann wir kommen." },
-    { "kat": "sicherheit", "start": true, "tags": [], "q": "Sind die Fahrzeuge videoüberwacht? Wird im Innenraum aufgenommen?", "a": "Im Innenraum wird nicht aufgenommen. In allen unseren Fahrzeugen sind Dashcams verbaut, die ausschließlich nach außen auf den Verkehr gerichtet sind. Sie dienen der Sicherheit und der Aufklärung bei Unfällen. Details finden Sie in unserer <a href=\"/datenschutz/#dashcam\">Datenschutzerklärung</a>." },
-    { "kat": "sicherheit", "tags": [], "q": "Was passiert mit meinen Daten aus dem Anfrageformular?", "a": "Auf unserer Webseite wird nichts gespeichert. Das Formular baut nur eine Nachricht zusammen und öffnet damit WhatsApp oder Ihr E-Mail-Programm. Erst wenn Sie dort selbst auf Senden tippen, erreichen uns Ihre Angaben. Unsere Webseite nutzt keine Cookies und kein Tracking." }
+    {
+      "kat": "buchung",
+      "start": true,
+      "tags": [
+        "alltag",
+        "flughafen",
+        "fernfahrt"
+      ],
+      "q": "Muss ich ein Taxi vorbestellen?",
+      "a": "Nein. Sie erreichen uns rund um die Uhr, auch nachts, an Sonn- und Feiertagen. Für feste Termine wie Flughafen, Bahn, Arzttermin oder sehr frühe Abfahrten empfehlen wir aber, möglichst frühzeitig zu bestellen. Dann planen wir Ihre Fahrt fest ein."
+    },
+    {
+      "kat": "buchung",
+      "start": true,
+      "tags": [],
+      "q": "Wie kann ich eine Fahrt bestellen?",
+      "a": "Am schnellsten per Anruf unter der 04541 802080. Oder Sie füllen unser kurzes Anfrageformular aus: Es öffnet WhatsApp mit Ihrer fertigen Nachricht. Per E-Mail an info@inseltaxi-ratzeburg.de geht es natürlich auch. Sie erhalten von uns eine Bestätigung."
+    },
+    {
+      "kat": "buchung",
+      "start": true,
+      "tags": [
+        "fernfahrt",
+        "flughafen"
+      ],
+      "q": "Fahren Sie auch weite Strecken oder ins Ausland?",
+      "a": "Ja. Ratzeburg ist unser Zuhause, nicht unsere Grenze. Wir fahren Sie deutschlandweit und auch ins Ausland, zum Beispiel nach Hamburg, Berlin, Hannover, an die Ostsee, nach Sylt oder zu jedem Flughafen."
+    },
+    {
+      "kat": "buchung",
+      "tags": [
+        "flughafen"
+      ],
+      "q": "Holen Sie mich auch am Flughafen ab?",
+      "a": "Ja. Teilen Sie uns Flughafen, Flugnummer und geplante Ankunftszeit mit. Auf Wunsch erwarten wir Sie mit einem Namensschild in der Ankunftshalle. Ändert sich Ihre Ankunft, melden Sie sich einfach telefonisch oder per WhatsApp bei uns."
+    },
+    {
+      "kat": "preise",
+      "start": true,
+      "tags": [
+        "fernfahrt",
+        "flughafen",
+        "geschaeft"
+      ],
+      "q": "Was kostet eine Fernfahrt oder ein Flughafentransfer?",
+      "a": "Für Fahrten innerhalb des Kreises Herzogtum Lauenburg gilt der amtliche Taxitarif (siehe <a href=\"/tarife/\">Tarife</a>). Liegt Ihr Ziel außerhalb, kann der Preis für die gesamte Strecke vor Fahrtbeginn frei vereinbart werden. Fragen Sie uns einfach mit Start und Ziel an, wir nennen Ihnen vorab einen Preis."
+    },
+    {
+      "kat": "preise",
+      "start": true,
+      "tags": [
+        "geschaeft",
+        "alltag"
+      ],
+      "q": "Wie kann ich bezahlen?",
+      "a": "Bar, mit EC- oder Kreditkarte, mit PayPal oder für Geschäftskunden bequem auf Rechnung. Auf Wunsch erhalten Sie selbstverständlich eine Quittung."
+    },
+    {
+      "kat": "preise",
+      "tags": [
+        "geschaeft"
+      ],
+      "q": "Kann meine Firma auf Rechnung fahren?",
+      "a": "Ja. Für Geschäftskunden fahren wir auf Rechnung, auf Wunsch gesammelt als Monatsrechnung. Sprechen Sie uns an, dann richten wir das für Ihr Unternehmen ein."
+    },
+    {
+      "kat": "fahrzeuge",
+      "tags": [
+        "gruppe",
+        "flughafen",
+        "fernfahrt"
+      ],
+      "q": "Wie viele Personen passen in ein Taxi?",
+      "a": "Unser SUV bietet bis zu 6 Plätze, unser Großraumtaxi bis zu 8. Für größere Gruppen koordinieren wir mehrere Fahrzeuge."
+    },
+    {
+      "kat": "fahrzeuge",
+      "start": true,
+      "tags": [
+        "flughafen",
+        "fernfahrt",
+        "bahnhof"
+      ],
+      "q": "Kostet Gepäck extra?",
+      "a": "Nein. Nach der amtlichen Tarifordnung wird Gepäck unentgeltlich befördert, also Handgepäck, Reisekoffer und Rollatoren, soweit Platz und Verkehrssicherheit es zulassen. Haben Sie besonders viel oder sperriges Gepäck, sagen Sie es uns bitte bei der Anfrage."
+    },
+    {
+      "kat": "fahrzeuge",
+      "tags": [
+        "kinder",
+        "flughafen"
+      ],
+      "q": "Gibt es Kindersitze?",
+      "a": "Unsere Fahrzeuge haben integrierte Kindersitzerhöhungen. Fahren Babys oder Kleinkinder mit, die eine Babyschale oder einen eigenen Kindersitz brauchen, sprechen Sie uns bitte vorher an."
+    },
+    {
+      "kat": "fahrzeuge",
+      "tags": [
+        "kinder"
+      ],
+      "q": "Fahren Sie Kinder auch ohne Begleitung?",
+      "a": "Ja, Kinderfahrten gehören zu unseren Leistungen, zum Beispiel zur Schule, zum Sport oder zu den Großeltern. Wir sprechen vorher genau ab, wer das Kind übergibt und wer es in Empfang nimmt. Bei der Abholung geben wir den Eltern auf Wunsch kurz Bescheid."
+    },
+    {
+      "kat": "kranken",
+      "start": true,
+      "tags": [
+        "krankenfahrt"
+      ],
+      "q": "Rechnen Sie Krankenfahrten direkt mit der Krankenkasse ab?",
+      "a": "Ja. Wir rechnen direkt mit den Krankenkassen ab (Institutionskennzeichen 600138210). Sie brauchen dafür in der Regel eine ärztliche Verordnung und, je nach Fall, eine Genehmigung Ihrer Krankenkasse. Die gesetzliche Zuzahlung zahlen Sie wie üblich selbst, sofern Sie nicht befreit sind."
+    },
+    {
+      "kat": "kranken",
+      "tags": [
+        "krankenfahrt"
+      ],
+      "q": "Was brauche ich für eine Krankenfahrt?",
+      "a": "In der Regel eine ärztliche Verordnung einer Krankenbeförderung. Für viele ambulante Fahrten, etwa zur Dialyse, Chemo- oder Strahlentherapie, muss Ihre Krankenkasse die Fahrt vorher genehmigen. Unsicher, was in Ihrem Fall gilt? Rufen Sie uns an, wir helfen Ihnen gern weiter. Verbindlich entscheidet Ihre Krankenkasse."
+    },
+    {
+      "kat": "kranken",
+      "tags": [
+        "krankenfahrt"
+      ],
+      "q": "Kann ich meinen Rollator oder Rollstuhl mitnehmen?",
+      "a": "Einen Rollator nehmen wir selbstverständlich mit, kostenlos. Wenn Sie im Rollstuhl unterwegs sind, sprechen Sie uns bitte vorher an, damit wir gemeinsam klären, wie Ihre Fahrt am besten möglich ist."
+    },
+    {
+      "kat": "kranken",
+      "tags": [
+        "krankenfahrt"
+      ],
+      "q": "Übernehmen Sie regelmäßige Fahrten, etwa zur Dialyse?",
+      "a": "Ja. Serienfahrten zu Dialyse, Chemotherapie, Bestrahlung, Reha oder Therapie planen wir zu festen Zeiten ein. So wissen Sie immer, wann wir kommen."
+    },
+    {
+      "kat": "sicherheit",
+      "tags": [],
+      "q": "Was passiert mit meinen Daten aus dem Anfrageformular?",
+      "a": "Auf unserer Webseite wird nichts gespeichert. Das Formular baut nur eine Nachricht zusammen und öffnet damit WhatsApp oder Ihr E-Mail-Programm. Erst wenn Sie dort selbst auf Senden tippen, erreichen uns Ihre Angaben. Unsere Webseite nutzt keine Cookies und kein Tracking.",
+      "start": true
+    }
   ]
 }
